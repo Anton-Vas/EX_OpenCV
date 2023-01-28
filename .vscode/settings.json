@@ -1,0 +1,38 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "array": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "thread": "cpp",
+        "typeinfo": "cpp",
+        "random": "cpp",
+        "chrono": "cpp",
+        "compare": "cpp",
+        "functional": "cpp",
+        "ratio": "cpp",
+        "type_traits": "cpp"
+    },
+    "cSpell.words": [
+        "chans",
+        "cntr",
+        "CSRT",
+        "DESCRIPRION",
+        "fontface",
+        "fourcc",
+        "FOURCC",
+        "HEXA",
+        "hndrec",
+        "hrec",
+        "HREC",
+        "maxcos",
+        "mincos",
+        "multrack",
+        "opencv",
+        "PENTA",
+        "shrec",
+        "Sobel",
+        "superres",
+        "visualisation"
+    ]
+}

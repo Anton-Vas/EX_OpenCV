@@ -1,0 +1,11 @@
+target_sources(
+    Playground_OpenCV
+    PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/DebugPrint.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/DebugPrint.cpp
+)
+target_include_directories(
+    Playground_OpenCV
+    PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}
+)

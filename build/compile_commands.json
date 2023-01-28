@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/home/dev/Desktop/EX_openCV/build",
+  "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/main.cpp.o -c /home/dev/Desktop/EX_openCV/main.cpp",
+  "file": "/home/dev/Desktop/EX_openCV/main.cpp"
+},
+{
+  "directory": "/home/dev/Desktop/EX_openCV/build",
+  "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SystemManager.cpp.o -c /home/dev/Desktop/EX_openCV/SystemManager/SystemManager.cpp",
+  "file": "/home/dev/Desktop/EX_openCV/SystemManager/SystemManager.cpp"
+},
+{
+  "directory": "/home/dev/Desktop/EX_openCV/build",
+  "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.o -c /home/dev/Desktop/EX_openCV/SystemManager/SysParams.cpp",
+  "file": "/home/dev/Desktop/EX_openCV/SystemManager/SysParams.cpp"
+},
+{
+  "directory": "/home/dev/Desktop/EX_openCV/build",
+  "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o -c /home/dev/Desktop/EX_openCV/DebugPrint/DebugPrint.cpp",
+  "file": "/home/dev/Desktop/EX_openCV/DebugPrint/DebugPrint.cpp"
+}
+]
