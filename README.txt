@@ -4,6 +4,7 @@
 Commands:
 
 RUN:
+                in /home/dev/Desktop/EX_openCV use ./run.sh
                 sudo /home/dev/Desktop/EX_openCV/build/Playground_OpenCV
 
 STOP:

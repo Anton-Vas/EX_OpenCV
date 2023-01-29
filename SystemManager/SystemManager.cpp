@@ -123,8 +123,7 @@ void SystemManager::enable_video_GUI            (){
     }
 
     if (sys_param->f_hrec)          {//> hrec
-
-        org_frame.copyTo(out_hrec_frame);
+    
         enable_hrec();
 
         gui->show_video_FPS(out_hrec_frame, fps);
