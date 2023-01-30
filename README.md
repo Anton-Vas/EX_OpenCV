@@ -7,29 +7,29 @@
 ## General code overview
 
 ## Source materials
-1. Super resolution
+1. Super resolution <sub>(OpenCV)</sub>
 
-    __Task__:           to enhance frame resolution
+    __Task__: _to enhance frame resolution_
 
-    Source:
+    __Source__:
     
     - (code + theory)     https://learnopencv.com/super-resolution-in-opencv/
                     
     - (.pb)               https://github.com/Saafke/FSRCNN_Tensorflow
     
-    Taken example:
+    __Example__:
     
     - FSRCNN (as one of the fastest algorithms)
 
-2. Region tracking (only OpenCV)
+2. Region tracking <sub>(OpenCV)</sub>
 
-    Task:           to track specific region (pre-aimed to the screens center)
+    __Task__: _to track specific region (pre-aimed to the screens center)_
     
-    Source:
+    __Source__:
     
     - (code + theory)     https://learnopencv.com/object-tracking-using-opencv-cpp-python/
     
-    Taken example:
+    __Example__:
     
     - MIL
     
@@ -37,11 +37,11 @@
     
     - CSRT
 
-3. Basic geometrical shapes recognition (only OpenCV)
+3. Basic geometrical shapes recognition <sub>(OpenCV)</sub>
 
-    Task: to recognise geometrical shapes and underline its type
+    __Task__: _to recognise geometrical shapes and underline its type_
     
-    Source:
+    __Source__:
     
     - (code + theory)     https://opencvproject.wordpress.com/projects-files/detection-shape/
     
@@ -49,11 +49,11 @@
     
     - (contour detection) https://learnopencv.com/contour-detection-using-opencv-python-c/#Drawing-Contours-using-CHAIN_APPROX_SIMPLE
 
-4. Hand recognition (OpenCV with MediaPipe)
+4. Hand recognition <sub>(OpenCV with MediaPipe)</sub>
 
-    Task: to recognise hands movements/gestures with MediaPipe & OpenCV 
+    __Task__: _to recognise hands movements/gestures with MediaPipe & OpenCV_
     
-    Source:
+    __Source__:
     
     - (code + theory)     https://github.com/GasbaouiMohammedAlAmin/Finger-Counter-using-Hand-Tracking-And-Open-cv
     
