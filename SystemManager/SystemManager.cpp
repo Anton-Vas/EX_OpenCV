@@ -84,7 +84,7 @@ void SystemManager::system_loop                 (){
 
 
 void SystemManager::enable_video_GUI            (){
-    if (sys_param->f_supres) {//> supres
+    if (sys_param->f_supres)        {//> supres
 
         enable_supres();
 
