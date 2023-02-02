@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 #include <opencv2/opencv.hpp>
 
 #include <DebugPrint.hpp>
@@ -16,6 +18,12 @@ using namespace dnn_superres;
 
     /* tracking */
 #include <opencv2/tracking.hpp>
+
+    /* image classification */
+using namespace dnn;
+
+
+
 
 
 class DebugPrint;
@@ -38,16 +46,17 @@ private:
     Mat                 org_frame                   = {c_org_w, c_org_h, CV_8U, { 0, 0, 255, 255}};
     SysConnector*       sys_param                   = SysConnector::get_instance();
     SysGUI*             gui                         = SysGUI::get_instance();
+    filesystem::path    file;
 
     ///> main interface
-        /* super resolution */
+        /* (supres) super resolution */
     DnnSuperResImpl     sr;
     Mat                 out_supres_frame;
-    const string        fsrcnn_model_path           = "/home/dev/Desktop/EX_openCV/SystemDependencies/FSRCNN_x2.pb";    ///> FIXME: CMake should automaticaly locate the suitable path to FSRCNN_..
+    const string        fsrcnn_model_file           = "FSRCNN_x2";
     const string        fsrcnn_model_name           = "fsrcnn";
     const int           fsrcnn_scale                = 2;
 
-        /* tracking */
+        /* (track) tracking */
     const int           c_tr_rect_dif               = 40;
     Rect                roi_mil_rect                = {
         (c_org_w/2) - c_tr_rect_dif, 
@@ -75,7 +84,7 @@ private:
     Ptr<Tracker>        tracker_csrt                = nullptr;
     Mat                 out_track_frame;
 
-        /* shape recognition */
+        /* (shrec) shape recognition */
     const double        c_canny_threshold1          = 60;//0 80;                        // cv::Canny |> 1-st threshold for the hysteresis procedure
     const double        c_canny_threshold2          = 200;//50 240;                     //           |> 2-nd threshold for the hysteresis procedure
     const int           c_canny_apertureSize        = 3;//5 3;                          //           |> aperture size for the Sobel operator
@@ -96,8 +105,23 @@ private:
     Mat                 edges_shrec_frame;                                              //>     + 2nd frame rework (edges 1 channel)
     Mat                 edges_tmp_shrec_frame;                                          //>     + 3nd frame rework (edges 3 channel)
 
-        /* hand recognition */
+        /* (hrec) hand recognition */
     Mat                 out_hrec_frame;
+
+        /* (imcl) image classification */
+    vector<string>      imcl_obj_names;
+    Net                 imcl_trained_model;
+    string              imcl_obj_detect_classes     = "../../../input/object_detection_classes_coco.txt";
+    string              imcl_path_model             = "../../../input/frozen_inference_graph.pb";
+    string              imcl_path_config            = "../../../input/ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt";
+    string              imcl_path_framework         = "TensorFlow";
+    int                 box_x_imcl;
+    int                 box_y_imcl;
+    int                 box_w_imcl;
+    int                 box_h_imcl;
+    int                 obj_id_imcl;
+    int                 confidence_id_imcl;
+    Mat                 out_imcl_frame;
 
 
     ///> debug print
@@ -107,9 +131,9 @@ public:
 
     ///> system interface
     SystemManager();
-    SystemManager(SystemManager& _src)              = delete; ///> Copy semantics
+    SystemManager(SystemManager& _src)              = delete;                           ///> Copy semantics
     SystemManager& operator=(SystemManager const&)  = delete;
-    SystemManager(SystemManager&& _src)             = delete; ///> Move semantics
+    SystemManager(SystemManager&& _src)             = delete;                           ///> Move semantics
     SystemManager& operator=(SystemManager const&&) = delete;
     ~SystemManager();
 
@@ -121,17 +145,21 @@ public:
     void                enable_track                ();
     void                enable_shrec                ();
     void                enable_hrec                 ();
+    void                enable_imcl                 ();
 
     void                setup_video_GUI             ();
     void                setup_supres                ();
     void                setup_track                 ();
     void                setup_shrec                 ();
     void                setup_hrec                  ();
+    void                setup_imcl                  ();
 
     void                get_cmd                     (const char _cmd);
     void                clear_all_flags             ();
 
-    /* DESCRIPTION:
+    /* DESCRIPTION: additional functions
+    *
+    *   File:               SysHelper.cpp
     *  
     *   ! SPECIFICALLY FOR SHAPE RECOGNITION !
     *
@@ -140,8 +168,14 @@ public:
     * 
     */
     double              get_cosine_angle            (const Point _pt1, const Point _pt2, const Point _pt0);
+    string              get_path_to_file            (const string& _file);
     void                set_shrec_label             (const Mat& _im, const string _label, vector<Point>& _contour);
 
+    /* DESCRIPTION: window settings
+    *
+    *   File:               SysWindow.cpp
+    * 
+    */
     void                create_window               (const string& _win_name, const int _win_flag);
     void                destroy_all_windows         ();
     void                destroy_window              (const string& _win_name);

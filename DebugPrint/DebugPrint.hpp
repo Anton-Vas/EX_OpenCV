@@ -27,12 +27,13 @@ private:
     const string        c_DONE_header               = "[DONE]  : ";
     const string        c_INFO_header               = "[INFO]  : ";
     const string        c_sub_header                = "             - ";
-    const array<string, 7> msg_done                 = {
+    const array<string, 8> msg_done                 = {
             /* SYS_VIDEO_CAP_OK */                  "video port           READY ",
             /* SYS_SUPRES_OK */                     "supres               READY ",
             /* SYS_TRACK_OK */                      "single track         READY ",
             /* SYS_SHREC_OK */                      "shrec                READY ",
             /* SYS_HREC_OK */                       "hrec                 READY ",
+            /* SYS_IMCL_OK */                       "imcl                 READY ",
             /* SYS_WIND_CLOSE */                    "window              CLOSED ",
             /* SYS_WIND_OPEN */                     "window              OPENED "
     };
@@ -75,6 +76,7 @@ public:
         SYS_TRACK_OK,
         SYS_SHREC_OK,
         SYS_HREC_OK,
+        SYS_IMCL_OK,
         SYS_WIND_CLOSE,
         SYS_WIND_OPEN,
 

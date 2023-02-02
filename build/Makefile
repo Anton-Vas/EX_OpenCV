@@ -547,6 +547,30 @@ DebugPrint/DebugPrint.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Playground_OpenCV.dir/build.make CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.s
 .PHONY : DebugPrint/DebugPrint.cpp.s
 
+SystemManager/SysHelper.o: SystemManager/SysHelper.cpp.o
+.PHONY : SystemManager/SysHelper.o
+
+# target to build an object file
+SystemManager/SysHelper.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Playground_OpenCV.dir/build.make CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o
+.PHONY : SystemManager/SysHelper.cpp.o
+
+SystemManager/SysHelper.i: SystemManager/SysHelper.cpp.i
+.PHONY : SystemManager/SysHelper.i
+
+# target to preprocess a source file
+SystemManager/SysHelper.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Playground_OpenCV.dir/build.make CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.i
+.PHONY : SystemManager/SysHelper.cpp.i
+
+SystemManager/SysHelper.s: SystemManager/SysHelper.cpp.s
+.PHONY : SystemManager/SysHelper.s
+
+# target to generate assembly for a file
+SystemManager/SysHelper.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Playground_OpenCV.dir/build.make CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.s
+.PHONY : SystemManager/SysHelper.cpp.s
+
 SystemManager/SysParams.o: SystemManager/SysParams.cpp.o
 .PHONY : SystemManager/SysParams.o
 
@@ -570,6 +594,30 @@ SystemManager/SysParams.s: SystemManager/SysParams.cpp.s
 SystemManager/SysParams.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Playground_OpenCV.dir/build.make CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.s
 .PHONY : SystemManager/SysParams.cpp.s
+
+SystemManager/SysWindow.o: SystemManager/SysWindow.cpp.o
+.PHONY : SystemManager/SysWindow.o
+
+# target to build an object file
+SystemManager/SysWindow.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Playground_OpenCV.dir/build.make CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o
+.PHONY : SystemManager/SysWindow.cpp.o
+
+SystemManager/SysWindow.i: SystemManager/SysWindow.cpp.i
+.PHONY : SystemManager/SysWindow.i
+
+# target to preprocess a source file
+SystemManager/SysWindow.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Playground_OpenCV.dir/build.make CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.i
+.PHONY : SystemManager/SysWindow.cpp.i
+
+SystemManager/SysWindow.s: SystemManager/SysWindow.cpp.s
+.PHONY : SystemManager/SysWindow.s
+
+# target to generate assembly for a file
+SystemManager/SysWindow.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Playground_OpenCV.dir/build.make CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.s
+.PHONY : SystemManager/SysWindow.cpp.s
 
 SystemManager/SystemManager.o: SystemManager/SystemManager.cpp.o
 .PHONY : SystemManager/SystemManager.o
@@ -662,9 +710,15 @@ help:
 	@echo "... DebugPrint/DebugPrint.o"
 	@echo "... DebugPrint/DebugPrint.i"
 	@echo "... DebugPrint/DebugPrint.s"
+	@echo "... SystemManager/SysHelper.o"
+	@echo "... SystemManager/SysHelper.i"
+	@echo "... SystemManager/SysHelper.s"
 	@echo "... SystemManager/SysParams.o"
 	@echo "... SystemManager/SysParams.i"
 	@echo "... SystemManager/SysParams.s"
+	@echo "... SystemManager/SysWindow.o"
+	@echo "... SystemManager/SysWindow.i"
+	@echo "... SystemManager/SysWindow.s"
 	@echo "... SystemManager/SystemManager.o"
 	@echo "... SystemManager/SystemManager.i"
 	@echo "... SystemManager/SystemManager.s"

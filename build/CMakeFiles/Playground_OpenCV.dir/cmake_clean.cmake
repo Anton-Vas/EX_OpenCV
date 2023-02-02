@@ -1,8 +1,12 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o"
   "CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o.d"
+  "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o"
+  "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o.d"
   "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.o"
   "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.o.d"
+  "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o"
+  "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o.d"
   "CMakeFiles/Playground_OpenCV.dir/SystemManager/SystemManager.cpp.o"
   "CMakeFiles/Playground_OpenCV.dir/SystemManager/SystemManager.cpp.o.d"
   "CMakeFiles/Playground_OpenCV.dir/main.cpp.o"

@@ -1,0 +1,1 @@
+/usr/bin/cmake --build /home/dev/Desktop/EX_openCV/build --config Debug --target all -j 18 --

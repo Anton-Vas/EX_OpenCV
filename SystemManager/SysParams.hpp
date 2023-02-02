@@ -45,6 +45,12 @@ public:
     bool                f_hrec_enable               = false;    ///> RUN
     bool                f_hrec_wind_close           = false;    ///> widow close
 
+        /* image classification */
+    bool                f_imcl                      = false;    ///> general
+    bool                f_imcl_init                 = false;    ///> INIT
+    bool                f_imcl_enable               = false;    ///> RUN
+    bool                f_imcl_wind_close           = false;    ///> widow close
+
 
 
     static SysConnector* get_instance               ();
@@ -72,6 +78,8 @@ public:
     };
     string              track_type_name;
 
+
+
     ///>.. GUI ...........................................................................................
                                                     /*  b    g    r    A*/
         /* General */
@@ -89,6 +97,8 @@ public:
         /* positions */
     const Point2i       c_pos_fps                   = {20, 50};
     Point2i             c_pos_track_stat            = {0, 0};
+
+
     
     ///>.. Windows Names .................................................................................
         /* video window */
@@ -106,6 +116,10 @@ public:
 
         /* hand recognition */
     const string        c_hrec_wind_name            = "Hand Recognition";
+
+        /* hand recognition */
+    const string        c_imcl_wind_name            = "Image Classification";
+
 
 
     ///> main interface

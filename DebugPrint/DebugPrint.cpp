@@ -67,7 +67,7 @@ void DebugPrint::print_frame_type_info          (const Mat& _frame, const char* 
     txt_type += "C";
     txt_type += (chans + "C");
 
-    cout << c_INFO_header + "Frame analize" << endl;
+    cout << c_INFO_header + "Frame analyze" << endl;
     cout << "             | Name   : " << _frame_name       << c_new_line;
     cout << "             | Type   : " << txt_type          << c_new_line;
     cout << "             | Chan-s : " << _frame.channels() << c_new_line;
@@ -122,9 +122,8 @@ void DebugPrint::print_debug_cmd_options        (){
     cout << "      |   d  : DEBUG output control options                               |" << c_new_line;
     cout << "      |                                                                   |" << c_new_line;
     cout << "      | MODIFICATIONS:                                                    |" << c_new_line;
-    cout << "      |             <OpenCV>                     <MediaPipe + OpenCV>     |" << c_new_line;
     cout << "      |   s  : super resolution          | h  : hand recognition          |" << c_new_line;
-    cout << "      |   t  : single object tracking    | ?  :                           |" << c_new_line;
+    cout << "      |   t  : single object tracking    | i  : image classification      |" << c_new_line;
     cout << "      |   o  : shape recognition         | ?  :                           |" << c_new_line;
     cout << "      |                                  | ?  :                           |" << c_new_line;
     cout << "      +-------------------------------------------------------------------+" << c_new_line;

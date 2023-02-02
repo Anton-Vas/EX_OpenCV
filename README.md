@@ -7,7 +7,7 @@
 ## General code overview
 
 ## Source materials
-1. Super resolution <sub>(OpenCV)</sub>
+[x] __Super resolution (supres)__
 
     __Task__: _to enhance frame resolution_
 
@@ -21,7 +21,7 @@
     
     - FSRCNN (as one of the fastest algorithms)
 
-2. Region tracking <sub>(OpenCV)</sub>
+[x] __Region tracking (track)__ 
 
     __Task__: _to track specific region (pre-aimed to the screens center)_
     
@@ -37,7 +37,7 @@
     
     - CSRT
 
-3. Basic geometrical shapes recognition <sub>(OpenCV)</sub>
+[x] __Basic geometrical shapes recognition (shrec)__ 
 
     __Task__: _to recognise geometrical shapes and underline its type_
     
@@ -49,14 +49,20 @@
     
     - (contour detection) https://learnopencv.com/contour-detection-using-opencv-python-c/#Drawing-Contours-using-CHAIN_APPROX_SIMPLE
 
-4. Hand recognition <sub>(OpenCV with MediaPipe)</sub>
+[ ] __Hand recognition (hrec)__
 
-    __Task__: _to recognise hands movements/gestures with MediaPipe & OpenCV_
+    __Task__: _to recognise hands numeric gestures with OpenCV_
     
     __Source__:
     
-    - (code + theory)     https://github.com/GasbaouiMohammedAlAmin/Finger-Counter-using-Hand-Tracking-And-Open-cv
+    - (code + theory)     https://github.com/ahmetyaylalioglu/Estimation-of-the-number-of-real-time-hand-fingers-with-image-processing/blob/master/ElAlgilaV2.cpp
     
-    - (MediaPipe)         https://google.github.io/mediapipe/solutions/hands.html
-    
-    - (theory)            https://www.it-jim.com/blog/mini-tutorial-on-mediapipe/
+[ ] __Image classification (imcl)__
+
+    __Task__: _.._
+
+    __Source__:
+
+    - (code + basic theory) https://learnopencv.com/deep-learning-with-opencvs-dnn-module-a-definitive-guide/#guide-to-image-classification
+
+    - ()

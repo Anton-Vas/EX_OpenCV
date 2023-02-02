@@ -16,6 +16,16 @@
 },
 {
   "directory": "/home/dev/Desktop/EX_openCV/build",
+  "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o -c /home/dev/Desktop/EX_openCV/SystemManager/SysHelper.cpp",
+  "file": "/home/dev/Desktop/EX_openCV/SystemManager/SysHelper.cpp"
+},
+{
+  "directory": "/home/dev/Desktop/EX_openCV/build",
+  "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o -c /home/dev/Desktop/EX_openCV/SystemManager/SysWindow.cpp",
+  "file": "/home/dev/Desktop/EX_openCV/SystemManager/SysWindow.cpp"
+},
+{
+  "directory": "/home/dev/Desktop/EX_openCV/build",
   "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o -c /home/dev/Desktop/EX_openCV/DebugPrint/DebugPrint.cpp",
   "file": "/home/dev/Desktop/EX_openCV/DebugPrint/DebugPrint.cpp"
 }

@@ -134,6 +134,18 @@ void SystemManager::enable_video_GUI            (){
         sys_param->f_hrec_wind_close = false;
     }
 
+    if (sys_param->f_imcl)          {//> imcl
+    
+        enable_imcl();
+
+        gui->show_video_FPS(out_imcl_frame, fps);
+        imshow( gui->c_imcl_wind_name, out_imcl_frame);
+    }
+    else if (sys_param->f_imcl_wind_close){
+        destroy_window(gui->c_imcl_wind_name);
+        sys_param->f_imcl_wind_close = false;
+    }
+
     //> original
     gui->show_video_FPS(org_frame, fps);
     imshow( gui->c_org_wind_name, org_frame);
@@ -307,7 +319,76 @@ void SystemManager::enable_hrec                 (){
 
     //> run
     if (sys_param->f_hrec_enable){
-        //..
+        //...
+    }
+
+}
+
+void SystemManager::enable_imcl                 (){
+    //> init
+    if (sys_param->f_imcl_init){
+        setup_hrec();
+    }
+
+    //> run
+    if (sys_param->f_imcl_enable){
+
+        org_frame.copyTo(out_imcl_frame);
+
+        //create blob from image
+        Mat blob = blobFromImage(
+            out_imcl_frame,
+            1.0,
+            Size(300, 300),
+            Scalar(127.5, 127.5, 127.5),
+            true,
+            false);
+
+        //create blob from image
+        imcl_trained_model.setInput(blob);
+        
+        //forward pass through the model to carry out the detection
+        Mat output = imcl_trained_model.forward();
+        
+        Mat detectionMat(output.size[2], output.size[3], CV_32F, output.ptr<float>());
+       
+        for (int i = 0; i < detectionMat.rows; i++){
+            obj_id_imcl         = detectionMat.at<float>(i, 1);
+            confidence_id_imcl  = detectionMat.at<float>(i, 2);
+  
+            // Check if the detection is of good quality
+            if (confidence_id_imcl > 0.4){
+                box_x_imcl = static_cast<int>(detectionMat.at<float>(i, 3) * out_imcl_frame.cols);
+                box_y_imcl = static_cast<int>(detectionMat.at<float>(i, 4) * out_imcl_frame.rows);
+                box_w_imcl = static_cast<int>(detectionMat.at<float>(i, 5) * out_imcl_frame.cols - box_x_imcl);
+                box_h_imcl = static_cast<int>(detectionMat.at<float>(i, 6) * out_imcl_frame.rows - box_y_imcl);
+                rectangle(
+                    out_imcl_frame,
+                    Point(
+                        box_x_imcl,
+                        box_y_imcl
+                    ),
+                    Point(
+                        box_x_imcl + box_w_imcl,
+                        box_x_imcl + box_h_imcl
+                    ),
+                    Scalar(255,255,255),
+                    2
+                );
+                putText(
+                    out_imcl_frame,
+                    imcl_obj_names[obj_id_imcl-1].c_str(),
+                    Point(
+                        box_x_imcl,
+                        box_y_imcl - 5
+                    ),
+                    FONT_HERSHEY_SIMPLEX,
+                    0.5,
+                    Scalar(0,255,255),
+                    1
+                );
+            }
+        }
     }
 
 }
@@ -330,7 +411,7 @@ void SystemManager::setup_video_GUI             (){
 void SystemManager::setup_supres                (){
     create_window(gui->c_fsrcnn_wind_name, gui->c_vid_wind_flag);
     
-    sr.readModel(fsrcnn_model_path);
+    sr.readModel(get_path_to_file(fsrcnn_model_file));
     sr.setModel(fsrcnn_model_name, fsrcnn_scale);
 
     sys_param->f_supres_init        = false;
@@ -371,6 +452,8 @@ void SystemManager::setup_shrec                 (){
 
 void SystemManager::setup_hrec                  (){
     create_window(gui->c_hrec_wind_name, gui->c_vid_wind_flag);
+    
+    //...
 
     sys_param->f_hrec_init          = false;
     sys_param->f_hrec_enable        = true;
@@ -379,13 +462,29 @@ void SystemManager::setup_hrec                  (){
     debug->print_debug(debug->DONE, debug->SYS_HREC_OK);
 }
 
+void SystemManager::setup_imcl                  (){
+    create_window(gui->c_imcl_wind_name, gui->c_vid_wind_flag);
+    
+    ifstream ifs(imcl_obj_detect_classes.c_str());
+    string line;
+    while (getline(ifs, line)){
+        imcl_obj_names.push_back(line);
+    } 
+   
+   // load the neural network model
+    imcl_trained_model = readNet(
+        imcl_path_model,
+        imcl_path_config,
+        imcl_path_framework
+    );
+    
+    sys_param->f_imcl_init          = false;
+    sys_param->f_imcl_enable        = true;
+    sys_param->f_imcl_wind_close    = true;
 
+    debug->print_debug(debug->DONE, debug->SYS_IMCL_OK);
+}
 
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-///     OTHER...                                                                                      ///
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 void SystemManager::get_cmd                     (const char _cmd){
@@ -402,25 +501,31 @@ void SystemManager::get_cmd                     (const char _cmd){
             clear_all_flags();
             sys_param->f_supres = !sys_param->f_supres;
             sys_param->f_supres_init   = !sys_param->f_supres_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "super resolution is activated");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "super resolution running ...");
         }
         else if (_cmd == 't'){//> track
             clear_all_flags();
             sys_param->f_track         = !sys_param->f_track;
             sys_param->f_track_init    = !sys_param->f_track_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "single object tracking is activated");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "single object tracking running ...");
         }
         else if (_cmd == 'o'){//> shrec
             clear_all_flags();
             sys_param->f_shrec         = !sys_param->f_shrec;
             sys_param->f_shrec_init    = !sys_param->f_shrec_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "shape recognition is activated");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "shape recognition running ...");
         }
         else if (_cmd == 'h'){//> hrec
             clear_all_flags();
             sys_param->f_hrec          = !sys_param->f_hrec;
             sys_param->f_hrec_init     = !sys_param->f_hrec_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "hand recognition is activated");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "hand recognition running ...");
+        }
+        else if (_cmd == 'i'){//> imcl
+            clear_all_flags();
+            sys_param->f_imcl          = !sys_param->f_imcl;
+            sys_param->f_imcl_init     = !sys_param->f_imcl_init;
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "image classification running ...");
         }
     }
 }
@@ -438,69 +543,11 @@ void SystemManager::clear_all_flags             (){
      sys_param->f_hrec             = false;
      sys_param->f_hrec_init        = false;
      sys_param->f_hrec_enable      = false;
+    sys_param->f_imcl              = false;
+    sys_param->f_imcl_init         = false;
+    sys_param->f_imcl_enable       = false;
 }
 
 
-
-
-double  SystemManager::get_cosine_angle         (const Point _pt1, const Point _pt2, const Point _pt0){
-	double dx1 = _pt1.x - _pt0.x;
-	double dy1 = _pt1.y - _pt0.y;
-	double dx2 = _pt2.x - _pt0.x;
-	double dy2 = _pt2.y - _pt0.y;
-	return (dx1*dx2 + dy1*dy2)/sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10);
-}
-
-void  SystemManager::set_shrec_label            (const Mat& _im, const string _label, vector<Point>& _contour){
-	int fontface = FONT_HERSHEY_SIMPLEX;
-	double scale = 1;//0.4;
-	int thickness = 1;
-	int baseline = 0;
-
-	Size text = getTextSize(_label, fontface, scale, thickness, &baseline);
-	Rect r = boundingRect(_contour);
-
-	Point pt(r.x + ((r.width - text.width) / 2), r.y + ((r.height + text.height) / 2));
-	rectangle(
-        _im,
-        pt + Point(0, baseline),
-        pt + Point(text.width, -text.height),
-        CV_RGB(255,255,255),
-        FILLED
-    );
-	putText(
-        _im,
-        _label,
-        pt,
-        fontface,
-        scale,
-        gui->c_clr_RED,
-        thickness,
-        8);
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-///     WINDOW ACTION                                                                                 ///
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void SystemManager::destroy_all_windows         (){
-    destroyAllWindows();
-    debug->print_debug(debug->DONE, debug->SYS_WIND_CLOSE, "ALL");
-}
-
-void SystemManager::create_window               (const string& _win_name, const int _win_flag){
-    namedWindow(_win_name, _win_flag);
-    debug->print_debug(debug->DONE, debug->SYS_WIND_OPEN, _win_name);
-}
-
-void SystemManager::destroy_window              (const string& _win_name){
-    destroyWindow(_win_name);
-    debug->print_debug(debug->DONE, debug->SYS_WIND_CLOSE, _win_name);
-}
-
-void SystemManager::resize_window               (const string& _win_name, const int _w, const int _h){
-    resizeWindow(_win_name, _w, _h);
-}
 
 

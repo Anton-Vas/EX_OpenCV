@@ -111,10 +111,38 @@ CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dev/Desktop/EX_openCV/SystemManager/SysParams.cpp -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.s
 
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o: CMakeFiles/Playground_OpenCV.dir/flags.make
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o: ../SystemManager/SysHelper.cpp
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o: CMakeFiles/Playground_OpenCV.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dev/Desktop/EX_openCV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o -MF CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o.d -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o -c /home/dev/Desktop/EX_openCV/SystemManager/SysHelper.cpp
+
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/dev/Desktop/EX_openCV/SystemManager/SysHelper.cpp > CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.i
+
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dev/Desktop/EX_openCV/SystemManager/SysHelper.cpp -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.s
+
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o: CMakeFiles/Playground_OpenCV.dir/flags.make
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o: ../SystemManager/SysWindow.cpp
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o: CMakeFiles/Playground_OpenCV.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dev/Desktop/EX_openCV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o -MF CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o.d -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o -c /home/dev/Desktop/EX_openCV/SystemManager/SysWindow.cpp
+
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/dev/Desktop/EX_openCV/SystemManager/SysWindow.cpp > CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.i
+
+CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dev/Desktop/EX_openCV/SystemManager/SysWindow.cpp -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.s
+
 CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o: CMakeFiles/Playground_OpenCV.dir/flags.make
 CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o: ../DebugPrint/DebugPrint.cpp
 CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o: CMakeFiles/Playground_OpenCV.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dev/Desktop/EX_openCV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dev/Desktop/EX_openCV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o -MF CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o.d -o CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o -c /home/dev/Desktop/EX_openCV/DebugPrint/DebugPrint.cpp
 
 CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.i: cmake_force
@@ -130,6 +158,8 @@ Playground_OpenCV_OBJECTS = \
 "CMakeFiles/Playground_OpenCV.dir/main.cpp.o" \
 "CMakeFiles/Playground_OpenCV.dir/SystemManager/SystemManager.cpp.o" \
 "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.o" \
+"CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o" \
+"CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o" \
 "CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o"
 
 # External object files for target Playground_OpenCV
@@ -138,6 +168,8 @@ Playground_OpenCV_EXTERNAL_OBJECTS =
 Playground_OpenCV: CMakeFiles/Playground_OpenCV.dir/main.cpp.o
 Playground_OpenCV: CMakeFiles/Playground_OpenCV.dir/SystemManager/SystemManager.cpp.o
 Playground_OpenCV: CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.o
+Playground_OpenCV: CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o
+Playground_OpenCV: CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o
 Playground_OpenCV: CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o
 Playground_OpenCV: CMakeFiles/Playground_OpenCV.dir/build.make
 Playground_OpenCV: /usr/local/lib/libopencv_gapi.so.4.5.5
@@ -194,7 +226,7 @@ Playground_OpenCV: /usr/local/lib/libopencv_photo.so.4.5.5
 Playground_OpenCV: /usr/local/lib/libopencv_imgproc.so.4.5.5
 Playground_OpenCV: /usr/local/lib/libopencv_core.so.4.5.5
 Playground_OpenCV: CMakeFiles/Playground_OpenCV.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dev/Desktop/EX_openCV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable Playground_OpenCV"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dev/Desktop/EX_openCV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable Playground_OpenCV"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Playground_OpenCV.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
