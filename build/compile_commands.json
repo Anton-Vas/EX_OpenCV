@@ -6,6 +6,11 @@
 },
 {
   "directory": "/home/dev/Desktop/EX_openCV/build",
+  "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/SystemDependencies/SysFiles.cpp.o -c /home/dev/Desktop/EX_openCV/SystemDependencies/SysFiles.cpp",
+  "file": "/home/dev/Desktop/EX_openCV/SystemDependencies/SysFiles.cpp"
+},
+{
+  "directory": "/home/dev/Desktop/EX_openCV/build",
   "command": "/usr/bin/g++  -I/home/dev/Desktop/EX_openCV/SystemDependencies -I/home/dev/Desktop/EX_openCV/SystemManager -I/home/dev/Desktop/EX_openCV/DebugPrint -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Playground_OpenCV.dir/SystemManager/SystemManager.cpp.o -c /home/dev/Desktop/EX_openCV/SystemManager/SystemManager.cpp",
   "file": "/home/dev/Desktop/EX_openCV/SystemManager/SystemManager.cpp"
 },

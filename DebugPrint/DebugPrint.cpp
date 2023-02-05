@@ -123,7 +123,7 @@ void DebugPrint::print_debug_cmd_options        (){
     cout << "      |                                                                   |" << c_new_line;
     cout << "      | MODIFICATIONS:                                                    |" << c_new_line;
     cout << "      |   s  : super resolution          | h  : hand recognition          |" << c_new_line;
-    cout << "      |   t  : single object tracking    | i  : image classification      |" << c_new_line;
+    cout << "      |   t  : single object tracking    | i  : object detection          |" << c_new_line;
     cout << "      |   o  : shape recognition         | ?  :                           |" << c_new_line;
     cout << "      |                                  | ?  :                           |" << c_new_line;
     cout << "      +-------------------------------------------------------------------+" << c_new_line;

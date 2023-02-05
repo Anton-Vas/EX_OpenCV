@@ -46,10 +46,10 @@ public:
     bool                f_hrec_wind_close           = false;    ///> widow close
 
         /* image classification */
-    bool                f_imcl                      = false;    ///> general
-    bool                f_imcl_init                 = false;    ///> INIT
-    bool                f_imcl_enable               = false;    ///> RUN
-    bool                f_imcl_wind_close           = false;    ///> widow close
+    bool                f_objdet                      = false;    ///> general
+    bool                f_objdet_init                 = false;    ///> INIT
+    bool                f_objdet_enable               = false;    ///> RUN
+    bool                f_objdet_wind_close           = false;    ///> widow close
 
 
 
@@ -118,7 +118,7 @@ public:
     const string        c_hrec_wind_name            = "Hand Recognition";
 
         /* hand recognition */
-    const string        c_imcl_wind_name            = "Image Classification";
+    const string        c_objdet_wind_name          = "Image Classification";
 
 
 

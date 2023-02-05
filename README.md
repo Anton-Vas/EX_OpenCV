@@ -7,7 +7,7 @@
 ## General code overview
 
 ## Source materials
-[x] __Super resolution (supres)__
+- [x] __Super resolution (supres)__
 
     __Task__: _to enhance frame resolution_
 
@@ -21,7 +21,7 @@
     
     - FSRCNN (as one of the fastest algorithms)
 
-[x] __Region tracking (track)__ 
+- [x] __Region tracking (track)__ 
 
     __Task__: _to track specific region (pre-aimed to the screens center)_
     
@@ -37,7 +37,7 @@
     
     - CSRT
 
-[x] __Basic geometrical shapes recognition (shrec)__ 
+- [x] __Basic geometrical shapes recognition (shrec)__ 
 
     __Task__: _to recognise geometrical shapes and underline its type_
     
@@ -49,7 +49,7 @@
     
     - (contour detection) https://learnopencv.com/contour-detection-using-opencv-python-c/#Drawing-Contours-using-CHAIN_APPROX_SIMPLE
 
-[ ] __Hand recognition (hrec)__
+- [ ] __Hand recognition (hrec)__
 
     __Task__: _to recognise hands numeric gestures with OpenCV_
     
@@ -57,12 +57,14 @@
     
     - (code + theory)     https://github.com/ahmetyaylalioglu/Estimation-of-the-number-of-real-time-hand-fingers-with-image-processing/blob/master/ElAlgilaV2.cpp
     
-[ ] __Image classification (imcl)__
+- [X] __Object detection (objdet)__
 
-    __Task__: _.._
+    __Task__: _to detect as many objects as possible_
 
     __Source__:
 
-    - (code + basic theory) https://learnopencv.com/deep-learning-with-opencvs-dnn-module-a-definitive-guide/#guide-to-image-classification
+    - (code + theory)     https://learnopencv.com/deep-learning-with-opencvs-dnn-module-a-definitive-guide/#guide-to-image-classification
 
-    - ()
+    - (code + theory)     https://learnopencv.com/deep-learning-with-opencvs-dnn-module-a-definitive-guide/
+
+    - (code)              https://github.com/ChiekoN/OpenCV_SSD_MobileNet

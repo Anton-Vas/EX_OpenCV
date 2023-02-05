@@ -15,7 +15,12 @@
 #   -> 2/3/4
 #   
 
-
+target_sources(
+    Playground_OpenCV
+    PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/SysFiles.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/SysFiles.cpp
+)
 
 target_include_directories(
     Playground_OpenCV

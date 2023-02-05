@@ -134,16 +134,16 @@ void SystemManager::enable_video_GUI            (){
         sys_param->f_hrec_wind_close = false;
     }
 
-    if (sys_param->f_imcl)          {//> imcl
+    if (sys_param->f_objdet)        {//> objdet
     
-        enable_imcl();
+        enable_objdet();
 
-        gui->show_video_FPS(out_imcl_frame, fps);
-        imshow( gui->c_imcl_wind_name, out_imcl_frame);
+        gui->show_video_FPS(out_objdet_frame, fps);
+        imshow( gui->c_objdet_wind_name, out_objdet_frame);
     }
-    else if (sys_param->f_imcl_wind_close){
-        destroy_window(gui->c_imcl_wind_name);
-        sys_param->f_imcl_wind_close = false;
+    else if (sys_param->f_objdet_wind_close){
+        destroy_window(gui->c_objdet_wind_name);
+        sys_param->f_objdet_wind_close = false;
     }
 
     //> original
@@ -324,20 +324,20 @@ void SystemManager::enable_hrec                 (){
 
 }
 
-void SystemManager::enable_imcl                 (){
+void SystemManager::enable_objdet                 (){
     //> init
-    if (sys_param->f_imcl_init){
-        setup_hrec();
+    if (sys_param->f_objdet_init){
+        setup_objdet();
     }
 
     //> run
-    if (sys_param->f_imcl_enable){
+    if (sys_param->f_objdet_enable){
 
-        org_frame.copyTo(out_imcl_frame);
+        org_frame.copyTo(out_objdet_frame);
 
         //create blob from image
         Mat blob = blobFromImage(
-            out_imcl_frame,
+            out_objdet_frame,
             1.0,
             Size(300, 300),
             Scalar(127.5, 127.5, 127.5),
@@ -345,42 +345,42 @@ void SystemManager::enable_imcl                 (){
             false);
 
         //create blob from image
-        imcl_trained_model.setInput(blob);
+        objdet_trained_model.setInput(blob);
         
         //forward pass through the model to carry out the detection
-        Mat output = imcl_trained_model.forward();
+        Mat output = objdet_trained_model.forward();
         
         Mat detectionMat(output.size[2], output.size[3], CV_32F, output.ptr<float>());
        
         for (int i = 0; i < detectionMat.rows; i++){
-            obj_id_imcl         = detectionMat.at<float>(i, 1);
-            confidence_id_imcl  = detectionMat.at<float>(i, 2);
+            obj_id_objdet         = detectionMat.at<float>(i, 1);
+            confidence_id_objdet  = detectionMat.at<float>(i, 2);
   
             // Check if the detection is of good quality
-            if (confidence_id_imcl > 0.4){
-                box_x_imcl = static_cast<int>(detectionMat.at<float>(i, 3) * out_imcl_frame.cols);
-                box_y_imcl = static_cast<int>(detectionMat.at<float>(i, 4) * out_imcl_frame.rows);
-                box_w_imcl = static_cast<int>(detectionMat.at<float>(i, 5) * out_imcl_frame.cols - box_x_imcl);
-                box_h_imcl = static_cast<int>(detectionMat.at<float>(i, 6) * out_imcl_frame.rows - box_y_imcl);
+            if (confidence_id_objdet > 0.4){
+                box_x_objdet = static_cast<int>(detectionMat.at<float>(i, 3) * out_objdet_frame.cols);
+                box_y_objdet = static_cast<int>(detectionMat.at<float>(i, 4) * out_objdet_frame.rows);
+                box_w_objdet = static_cast<int>(detectionMat.at<float>(i, 5) * out_objdet_frame.cols - box_x_objdet);
+                box_h_objdet = static_cast<int>(detectionMat.at<float>(i, 6) * out_objdet_frame.rows - box_y_objdet);
                 rectangle(
-                    out_imcl_frame,
+                    out_objdet_frame,
                     Point(
-                        box_x_imcl,
-                        box_y_imcl
+                        box_x_objdet,
+                        box_y_objdet
                     ),
                     Point(
-                        box_x_imcl + box_w_imcl,
-                        box_x_imcl + box_h_imcl
+                        box_x_objdet + box_w_objdet,
+                        box_x_objdet + box_h_objdet
                     ),
                     Scalar(255,255,255),
                     2
                 );
                 putText(
-                    out_imcl_frame,
-                    imcl_obj_names[obj_id_imcl-1].c_str(),
+                    out_objdet_frame,
+                    objdet_obj_names[obj_id_objdet-1].c_str(),
                     Point(
-                        box_x_imcl,
-                        box_y_imcl - 5
+                        box_x_objdet,
+                        box_y_objdet - 5
                     ),
                     FONT_HERSHEY_SIMPLEX,
                     0.5,
@@ -411,7 +411,12 @@ void SystemManager::setup_video_GUI             (){
 void SystemManager::setup_supres                (){
     create_window(gui->c_fsrcnn_wind_name, gui->c_vid_wind_flag);
     
-    sr.readModel(get_path_to_file(fsrcnn_model_file));
+    sr.readModel(
+        files->get_path_to(
+            files->UNIT::SUPRES,
+            files->SUPRES_FILE::FSRCNN_x2
+        )
+    );
     sr.setModel(fsrcnn_model_name, fsrcnn_scale);
 
     sys_param->f_supres_init        = false;
@@ -462,27 +467,41 @@ void SystemManager::setup_hrec                  (){
     debug->print_debug(debug->DONE, debug->SYS_HREC_OK);
 }
 
-void SystemManager::setup_imcl                  (){
-    create_window(gui->c_imcl_wind_name, gui->c_vid_wind_flag);
-    
-    ifstream ifs(imcl_obj_detect_classes.c_str());
+void SystemManager::setup_objdet                  (){
+    create_window(gui->c_objdet_wind_name, gui->c_vid_wind_flag);
+cout<<"1"<<endl;
+    ifstream ifs(
+        // objdet_obj_detect_classes.c_str()
+        files->get_path_to(
+            files->OBJDET,
+            files->OBJDET_FILE::OBJECT_DETECTION_CLASSES_COCO_txt
+        )
+    );
+cout<<" 2"<<endl;
     string line;
     while (getline(ifs, line)){
-        imcl_obj_names.push_back(line);
+        objdet_obj_names.push_back(line);
     } 
-   
+cout<<"  3"<<endl;
    // load the neural network model
-    imcl_trained_model = readNet(
-        imcl_path_model,
-        imcl_path_config,
-        imcl_path_framework
+    objdet_trained_model = readNet(
+        files->get_path_to(
+            files->UNIT::OBJDET,
+            files->OBJDET_FILE::FROZEN_INTERFACE_GRAPH_pb
+        ),
+        files->get_path_to(
+            files->UNIT::OBJDET,
+            files->OBJDET_FILE::SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt
+        ),
+        objdet_path_framework
     );
+cout<<"   4"<<endl;
     
-    sys_param->f_imcl_init          = false;
-    sys_param->f_imcl_enable        = true;
-    sys_param->f_imcl_wind_close    = true;
+    sys_param->f_objdet_init          = false;
+    sys_param->f_objdet_enable        = true;
+    sys_param->f_objdet_wind_close    = true;
 
-    debug->print_debug(debug->DONE, debug->SYS_IMCL_OK);
+    debug->print_debug(debug->DONE, debug->SYS_OBJDET_OK);
 }
 
 
@@ -521,11 +540,11 @@ void SystemManager::get_cmd                     (const char _cmd){
             sys_param->f_hrec_init     = !sys_param->f_hrec_init;
             debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "hand recognition running ...");
         }
-        else if (_cmd == 'i'){//> imcl
+        else if (_cmd == 'i'){//> objdet
             clear_all_flags();
-            sys_param->f_imcl          = !sys_param->f_imcl;
-            sys_param->f_imcl_init     = !sys_param->f_imcl_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "image classification running ...");
+            sys_param->f_objdet          = !sys_param->f_objdet;
+            sys_param->f_objdet_init     = !sys_param->f_objdet_init;
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "object detection running ...");
         }
     }
 }
@@ -543,9 +562,9 @@ void SystemManager::clear_all_flags             (){
      sys_param->f_hrec             = false;
      sys_param->f_hrec_init        = false;
      sys_param->f_hrec_enable      = false;
-    sys_param->f_imcl              = false;
-    sys_param->f_imcl_init         = false;
-    sys_param->f_imcl_enable       = false;
+    sys_param->f_objdet              = false;
+    sys_param->f_objdet_init         = false;
+    sys_param->f_objdet_enable       = false;
 }
 
 

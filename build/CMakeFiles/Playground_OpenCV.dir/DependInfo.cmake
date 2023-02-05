@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/dev/Desktop/EX_openCV/DebugPrint/DebugPrint.cpp" "CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o" "gcc" "CMakeFiles/Playground_OpenCV.dir/DebugPrint/DebugPrint.cpp.o.d"
+  "/home/dev/Desktop/EX_openCV/SystemDependencies/SysFiles.cpp" "CMakeFiles/Playground_OpenCV.dir/SystemDependencies/SysFiles.cpp.o" "gcc" "CMakeFiles/Playground_OpenCV.dir/SystemDependencies/SysFiles.cpp.o.d"
   "/home/dev/Desktop/EX_openCV/SystemManager/SysHelper.cpp" "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o" "gcc" "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysHelper.cpp.o.d"
   "/home/dev/Desktop/EX_openCV/SystemManager/SysParams.cpp" "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.o" "gcc" "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysParams.cpp.o.d"
   "/home/dev/Desktop/EX_openCV/SystemManager/SysWindow.cpp" "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o" "gcc" "CMakeFiles/Playground_OpenCV.dir/SystemManager/SysWindow.cpp.o.d"

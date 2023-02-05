@@ -2,11 +2,11 @@
 
 #include <iostream>
 #include <fstream>
-#include <filesystem>
 #include <opencv2/opencv.hpp>
 
 #include <DebugPrint.hpp>
 #include <SysParams.hpp>
+#include <SysFiles.hpp>
 
 using namespace std;
 using namespace cv;
@@ -46,7 +46,7 @@ private:
     Mat                 org_frame                   = {c_org_w, c_org_h, CV_8U, { 0, 0, 255, 255}};
     SysConnector*       sys_param                   = SysConnector::get_instance();
     SysGUI*             gui                         = SysGUI::get_instance();
-    filesystem::path    file;
+    SysFiles*           files                       = SysFiles::get_instance();
 
     ///> main interface
         /* (supres) super resolution */
@@ -55,6 +55,7 @@ private:
     const string        fsrcnn_model_file           = "FSRCNN_x2";
     const string        fsrcnn_model_name           = "fsrcnn";
     const int           fsrcnn_scale                = 2;
+
 
         /* (track) tracking */
     const int           c_tr_rect_dif               = 40;
@@ -84,6 +85,7 @@ private:
     Ptr<Tracker>        tracker_csrt                = nullptr;
     Mat                 out_track_frame;
 
+
         /* (shrec) shape recognition */
     const double        c_canny_threshold1          = 60;//0 80;                        // cv::Canny |> 1-st threshold for the hysteresis procedure
     const double        c_canny_threshold2          = 200;//50 240;                     //           |> 2-nd threshold for the hysteresis procedure
@@ -105,23 +107,25 @@ private:
     Mat                 edges_shrec_frame;                                              //>     + 2nd frame rework (edges 1 channel)
     Mat                 edges_tmp_shrec_frame;                                          //>     + 3nd frame rework (edges 3 channel)
 
+
         /* (hrec) hand recognition */
     Mat                 out_hrec_frame;
 
-        /* (imcl) image classification */
-    vector<string>      imcl_obj_names;
-    Net                 imcl_trained_model;
-    string              imcl_obj_detect_classes     = "../../../input/object_detection_classes_coco.txt";
-    string              imcl_path_model             = "../../../input/frozen_inference_graph.pb";
-    string              imcl_path_config            = "../../../input/ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt";
-    string              imcl_path_framework         = "TensorFlow";
-    int                 box_x_imcl;
-    int                 box_y_imcl;
-    int                 box_w_imcl;
-    int                 box_h_imcl;
-    int                 obj_id_imcl;
-    int                 confidence_id_imcl;
-    Mat                 out_imcl_frame;
+
+        /* (objdet) image classification */
+    vector<string>      objdet_obj_names;
+    Net                 objdet_trained_model;
+    // string              objdet_obj_detect_classes     = "../../../input/object_detection_classes_coco.txt";
+    // string              objdet_path_model             = "../../../input/frozen_inference_graph.pb";
+    // string              objdet_path_config            = "../../../input/ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt";
+    string              objdet_path_framework         = "TensorFlow";
+    int                 box_x_objdet;
+    int                 box_y_objdet;
+    int                 box_w_objdet;
+    int                 box_h_objdet;
+    int                 obj_id_objdet;
+    int                 confidence_id_objdet;
+    Mat                 out_objdet_frame;
 
 
     ///> debug print
@@ -145,14 +149,14 @@ public:
     void                enable_track                ();
     void                enable_shrec                ();
     void                enable_hrec                 ();
-    void                enable_imcl                 ();
+    void                enable_objdet               ();
 
     void                setup_video_GUI             ();
     void                setup_supres                ();
     void                setup_track                 ();
     void                setup_shrec                 ();
     void                setup_hrec                  ();
-    void                setup_imcl                  ();
+    void                setup_objdet                ();
 
     void                get_cmd                     (const char _cmd);
     void                clear_all_flags             ();
@@ -168,7 +172,6 @@ public:
     * 
     */
     double              get_cosine_angle            (const Point _pt1, const Point _pt2, const Point _pt0);
-    string              get_path_to_file            (const string& _file);
     void                set_shrec_label             (const Mat& _im, const string _label, vector<Point>& _contour);
 
     /* DESCRIPTION: window settings

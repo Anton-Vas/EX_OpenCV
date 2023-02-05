@@ -14,13 +14,6 @@ double SystemManager::get_cosine_angle          (const Point _pt1, const Point _
 	return (dx1*dx2 + dy1*dy2)/sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10);
 }
 
-string SystemManager::get_path_to_file          (const string& _file){
-    if(_file.find("FSRCNN")){
-    	file = ("SystemDependencies/" + _file + ".pb");
-    }
-    return absolute(file);
-}
-
 void SystemManager::set_shrec_label             (const Mat& _im, const string _label, vector<Point>& _contour){
 	int fontface = FONT_HERSHEY_SIMPLEX;
 	double scale = 3;//0.4;
