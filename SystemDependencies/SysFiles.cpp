@@ -34,16 +34,16 @@ string  SysFiles::get_path_to                   (const int _unit, const int _fil
     switch(_unit){
     case SUPRES:
         file = ("SystemDependencies/" + file_supres[_file]);
-        debug->print_debug(debug->INFO, debug->SYS_FILE_FOUND/*, file_supres[_file]*/);
+        debug->print_debug(debug->DONE, debug->SYS_FILE_FOUND, file_supres[_file]);
         break;
 
     case OBJDET:
         file = ("SystemDependencies/" + file_objdet[_file]);
-        debug->print_debug(debug->INFO, debug->SYS_FILE_FOUND/*, file_objdet[_file]*/);
+        debug->print_debug(debug->DONE, debug->SYS_FILE_FOUND, file_objdet[_file]);
         break;
 
     default:
-        debug->print_debug(debug->ERROR, debug->SYS_TRACK_OK, " unknown file!");
+        debug->print_debug(debug->ERROR, debug->SYS_FILE_ABSENT, " unknown file!");
         break;
     }
 

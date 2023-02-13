@@ -65,6 +65,17 @@ class SysGUI{
 private:
     static SysGUI*      _instance;
 
+    ///>.. GUI ...........................................................................................
+        /* positions */
+    const Point2i       c_pos_fps                   = {20, 50};
+    Point2i             c_pos_track_stat            = {0, 0};
+    Rect                roi_frame_centre;
+    Rect                roi_track_aim;
+    int                 c_baseline                  = 0;
+    const int           c_scale_STANDARD            = 1;
+    const int           c_thick_STANDARD            = 2;
+
+
 public:
     enum track_stat{
         OK,
@@ -94,9 +105,8 @@ public:
     const Scalar        c_clr_TR_KCF                = {255, 222,   0,  0};
     const Scalar        c_clr_TR_CSRT               = {255,   0, 196,  0};
 
-        /* positions */
-    const Point2i       c_pos_fps                   = {20, 50};
-    Point2i             c_pos_track_stat            = {0, 0};
+    const int           c_font                      = FONT_HERSHEY_SIMPLEX;
+
 
 
     
@@ -125,6 +135,8 @@ public:
     ///> main interface
     void                show_video_FPS              (Mat& _frame, const double _fps);
     void                show_video_TRACK_STAT       (Mat& _frame, const int _type, const int _status);
+    // void                show_video_TRACK_AIM        (Mat& _frame);
+    void                show_video_ERROR_msg        (Mat& _frame, const string _msg);
     Scalar              set_stat_color              (const int _status);
 
     static SysGUI*      get_instance                ();

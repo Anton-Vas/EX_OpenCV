@@ -21,13 +21,12 @@ DebugPrint* DebugPrint::get_instance            (){
     return _instance;
 }
 
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///     main interface                                                                                ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-*   cout << "" << c_new_line;
-*   cout << endl;
-*/
+
 
 void DebugPrint::print_sys_capture_info         (VideoCapture* _cap){
     cout << c_INFO_header + "Video capture" << c_new_line;
@@ -122,10 +121,14 @@ void DebugPrint::print_debug_cmd_options        (){
     cout << "      |   d  : DEBUG output control options                               |" << c_new_line;
     cout << "      |                                                                   |" << c_new_line;
     cout << "      | MODIFICATIONS:                                                    |" << c_new_line;
-    cout << "      |   s  : super resolution          | h  : hand recognition          |" << c_new_line;
-    cout << "      |   t  : single object tracking    | i  : object detection          |" << c_new_line;
-    cout << "      |   o  : shape recognition         | ?  :                           |" << c_new_line;
-    cout << "      |                                  | ?  :                           |" << c_new_line;
+    cout << "      |   s  : super res-n               | i  : object det-n              |" << c_new_line;
+    cout << "      |   t  : single object track       |                                |" << c_new_line;
+    cout << "      |   o  : shape rec-n               |                                |" << c_new_line;
+    cout << "      |   h  : hand recognition   [DEAD] |                                |" << c_new_line;
+    // cout << "      |                                                                   |" << c_new_line;
     cout << "      +-------------------------------------------------------------------+" << c_new_line;
+    // cout << "      |   0  : STOP              Num-options are required for             |" << c_new_line;
+    // cout << "      |   1  : START               every option that has '$'              |" << c_new_line;
+    // cout << "      +-------------------------------------------------------------------+" << c_new_line;
     cout << endl;
 }

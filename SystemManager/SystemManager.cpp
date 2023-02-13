@@ -59,10 +59,12 @@ void SystemManager::system_loop                 (){
             continue;
         }
         
-        fps = getTickFrequency() / ((double)getTickCount() - timer_fps);
+        // fps = getTickFrequency() / ((double)getTickCount() - timer_fps);
 
         //> video options
         enable_video_GUI();
+
+        fps = getTickFrequency() / ((double)getTickCount() - timer_fps);
 
         //> waiting & getting command
         get_cmd(waitKey(1));
@@ -324,7 +326,7 @@ void SystemManager::enable_hrec                 (){
 
 }
 
-void SystemManager::enable_objdet                 (){
+void SystemManager::enable_objdet               (){
     //> init
     if (sys_param->f_objdet_init){
         setup_objdet();
@@ -335,28 +337,37 @@ void SystemManager::enable_objdet                 (){
 
         org_frame.copyTo(out_objdet_frame);
 
-        //create blob from image
-        Mat blob = blobFromImage(
+        blobFromImage(
             out_objdet_frame,
+            objdet_blob_frame,
             1.0,
-            Size(300, 300),
+            Size(
+                c_objdet_blob_scale, //c_objdet_blob_scale | out_objdet_frame.cols
+                c_objdet_blob_scale  //c_objdet_blob_scale | out_objdet_frame.rows
+            ),
             Scalar(127.5, 127.5, 127.5),
             true,
-            false);
+            false
+        );
 
-        //create blob from image
-        objdet_trained_model.setInput(blob);
+        //> feed the blob to network model
+        objdet_trained_model.setInput( objdet_blob_frame);
         
-        //forward pass through the model to carry out the detection
-        Mat output = objdet_trained_model.forward();
-        
-        Mat detectionMat(output.size[2], output.size[3], CV_32F, output.ptr<float>());
-       
+        //> forward pass through the model to carry out the detection
+        objdet_out_model_frame = objdet_trained_model.forward();
+
+        Mat detectionMat(
+            objdet_out_model_frame.size[2],
+            objdet_out_model_frame.size[3],
+            CV_32F,
+            objdet_out_model_frame.ptr<float>()
+        );
+
         for (int i = 0; i < detectionMat.rows; i++){
             obj_id_objdet         = detectionMat.at<float>(i, 1);
             confidence_id_objdet  = detectionMat.at<float>(i, 2);
   
-            // Check if the detection is of good quality
+            //> Check if the detection is of good quality
             if (confidence_id_objdet > 0.4){
                 box_x_objdet = static_cast<int>(detectionMat.at<float>(i, 3) * out_objdet_frame.cols);
                 box_y_objdet = static_cast<int>(detectionMat.at<float>(i, 4) * out_objdet_frame.rows);
@@ -370,23 +381,26 @@ void SystemManager::enable_objdet                 (){
                     ),
                     Point(
                         box_x_objdet + box_w_objdet,
-                        box_x_objdet + box_h_objdet
+                        box_y_objdet + box_h_objdet
                     ),
-                    Scalar(255,255,255),
+                    gui->c_clr_GREEN,
                     2
                 );
                 putText(
                     out_objdet_frame,
-                    objdet_obj_names[obj_id_objdet-1].c_str(),
+                    objdet_obj_names[obj_id_objdet-1] + ": " + to_string(confidence_id_objdet),
                     Point(
                         box_x_objdet,
                         box_y_objdet - 5
                     ),
-                    FONT_HERSHEY_SIMPLEX,
+                    gui->c_font,
                     0.5,
-                    Scalar(0,255,255),
+                    gui->c_clr_GREEN,
                     1
                 );
+            }
+            else{
+                gui->show_video_ERROR_msg(out_objdet_frame, "NO OBJDET");
             }
         }
     }
@@ -467,23 +481,23 @@ void SystemManager::setup_hrec                  (){
     debug->print_debug(debug->DONE, debug->SYS_HREC_OK);
 }
 
-void SystemManager::setup_objdet                  (){
+void SystemManager::setup_objdet                (){
     create_window(gui->c_objdet_wind_name, gui->c_vid_wind_flag);
-cout<<"1"<<endl;
-    ifstream ifs(
-        // objdet_obj_detect_classes.c_str()
+    
+    ifstream ifs((
         files->get_path_to(
             files->OBJDET,
             files->OBJDET_FILE::OBJECT_DETECTION_CLASSES_COCO_txt
-        )
+        )).c_str()
     );
-cout<<" 2"<<endl;
+
     string line;
     while (getline(ifs, line)){
         objdet_obj_names.push_back(line);
-    } 
-cout<<"  3"<<endl;
-   // load the neural network model
+    }
+
+   //> load the neural network model
+   //> V1
     objdet_trained_model = readNet(
         files->get_path_to(
             files->UNIT::OBJDET,
@@ -495,8 +509,21 @@ cout<<"  3"<<endl;
         ),
         objdet_path_framework
     );
-cout<<"   4"<<endl;
-    
+    //> V2
+    // objdet_trained_model = readNetFromCaffe(
+    //     files->get_path_to(
+    //         files->UNIT::OBJDET,
+    //         files->OBJDET_FILE::MOBILENETSSD_DEPLOY_prototxt_txt
+    //     ),
+    //     files->get_path_to(
+    //         files->UNIT::OBJDET,
+    //         files->OBJDET_FILE::MOBILENETSSD_DEPLOY_caffemodel
+    //     )
+    // );
+
+    objdet_trained_model.setPreferableBackend(DNN_BACKEND_OPENCV);
+    objdet_trained_model.setPreferableTarget(DNN_TARGET_CPU);
+
     sys_param->f_objdet_init          = false;
     sys_param->f_objdet_enable        = true;
     sys_param->f_objdet_wind_close    = true;
@@ -546,6 +573,15 @@ void SystemManager::get_cmd                     (const char _cmd){
             sys_param->f_objdet_init     = !sys_param->f_objdet_init;
             debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "object detection running ...");
         }
+        //> IN PROGRESS
+        // else if (_cmd == '1'){//> START
+        //     //...
+        //     debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "START");
+        // }
+        // else if (_cmd == '0'){//> STOP
+        //     //...
+        //     debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "STOP");
+        // }
     }
 }
 

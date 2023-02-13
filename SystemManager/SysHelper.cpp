@@ -31,7 +31,7 @@ void SystemManager::set_shrec_label             (const Mat& _im, const string _l
         CV_RGB(255,255,255),
         FILLED
     );
-	putText(
+    putText(
         _im,
         _label,
         pt,
@@ -39,5 +39,6 @@ void SystemManager::set_shrec_label             (const Mat& _im, const string _l
         scale,
         gui->c_clr_RED,
         thickness,
-        8);
+        8
+	);
 }

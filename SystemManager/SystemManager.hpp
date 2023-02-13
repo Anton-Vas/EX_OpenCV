@@ -115,16 +115,16 @@ private:
         /* (objdet) image classification */
     vector<string>      objdet_obj_names;
     Net                 objdet_trained_model;
-    // string              objdet_obj_detect_classes     = "../../../input/object_detection_classes_coco.txt";
-    // string              objdet_path_model             = "../../../input/frozen_inference_graph.pb";
-    // string              objdet_path_config            = "../../../input/ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt";
-    string              objdet_path_framework         = "TensorFlow";
+    string              objdet_path_framework       = "TensorFlow";
+    const int           c_objdet_blob_scale         = 720;                              //> 224 | 300 | 720
     int                 box_x_objdet;
     int                 box_y_objdet;
     int                 box_w_objdet;
     int                 box_h_objdet;
     int                 obj_id_objdet;
     int                 confidence_id_objdet;
+    Mat                 objdet_blob_frame;
+    Mat                 objdet_out_model_frame;
     Mat                 out_objdet_frame;
 
 

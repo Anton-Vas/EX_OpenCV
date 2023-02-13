@@ -11,7 +11,8 @@
         "compare": "cpp",
         "functional": "cpp",
         "ratio": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "iosfwd": "cpp"
     },
     "cSpell.words": [
         "chans",

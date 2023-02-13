@@ -33,10 +33,14 @@ private:
             /* FSRCNN_small_x3 */                   "FSRCNN-small_x3.pb",
             /* FSRCNN_small_x4 */                   "FSRCNN-small_x4.pb",
     };
-    const array<string, 3> file_objdet              = {
+    const array<string, 5> file_objdet              = {
             /* OBJECT_DETECTION_CLASSES_COCO_txt */             "object_detection_classes_coco.txt",
+            
             /* FROZEN_INTERFACE_GRAPH_pb */                     "frozen_inference_graph.pb",
-            /* SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt */    "ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt"
+            /* MOBILENETSSD_DEPLOY_caffemodel */                "MobileNetSSD_deploy.caffemodel",
+            
+            /* SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt */    "ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt",
+            /* MOBILENETSSD_DEPLOY_prototxt_txt */              "MobileNetSSD_deploy.prototxt.txt"
     };
 
 
@@ -72,9 +76,16 @@ public:
         FSRCNN_small_x4,
     };
     enum OBJDET_FILE{
+        /* objects classes */
         OBJECT_DETECTION_CLASSES_COCO_txt,
+
+        /* model */
         FROZEN_INTERFACE_GRAPH_pb,
-        SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt
+        MOBILENETSSD_DEPLOY_caffemodel,
+
+        /* config */
+        SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt,
+        MOBILENETSSD_DEPLOY_prototxt_txt
     };
 
 
