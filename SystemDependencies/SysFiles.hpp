@@ -18,6 +18,40 @@ using namespace std;
 *
 * */
 class SysFiles{
+public:
+    ///> main interface
+    enum UNIT{
+        SUPRES,
+        DETECT
+    };
+    enum SUPRES_FILE{
+        FSRCNN_x2,
+        FSRCNN_x3,
+        FSRCNN_x4,
+        FSRCNN_small_x2,
+        FSRCNN_small_x3,
+        FSRCNN_small_x4,
+
+        SUPRES_FILE_END
+    };
+    enum DETECT_FILE{
+        /* classes */
+        OBJECT_DETECTION_CLASSES_COCO_txt,                      ///> tst list of objects classes
+        COLORS_txt,                                             ///> txt list of colors
+
+        /* model */
+        FROZEN_INTERFACE_GRAPH_objdet_pb,                       ///> pre-trained weights
+        FROZEN_INTERFACE_GRAPH_detseg_pb,                       ///> pre-trained weights
+        MOBILENETSSD_DEPLOY_caffemodel,
+
+        /* config */
+        SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt,
+        MOBILENETSSD_DEPLOY_prototxt_txt,
+        MASK_RCNN_INCEPTION_V2_COCO_2018_01_28_pbtxt,
+
+        DETECT_FILE_END
+    };
+
 private:
 
     ///> system interface
@@ -25,7 +59,7 @@ private:
     filesystem::path    file                        = {""};
 
     ///> main interface
-    const array<string, 6> file_supres              = {
+    const array<string, SUPRES_FILE_END> file_supres = {
             /* FSRCNN_x2 */                         "FSRCNN_x2.pb",
             /* FSRCNN_x3 */                         "FSRCNN_x3.pb",
             /* FSRCNN_x4 */                         "FSRCNN_x4.pb",
@@ -33,14 +67,17 @@ private:
             /* FSRCNN_small_x3 */                   "FSRCNN-small_x3.pb",
             /* FSRCNN_small_x4 */                   "FSRCNN-small_x4.pb",
     };
-    const array<string, 5> file_objdet              = {
+    const array<string, DETECT_FILE_END> file_detect = {
             /* OBJECT_DETECTION_CLASSES_COCO_txt */             "object_detection_classes_coco.txt",
+            /* COLORS_txt */                                    "colors.txt",
             
-            /* FROZEN_INTERFACE_GRAPH_pb */                     "frozen_inference_graph.pb",
+            /* FROZEN_INTERFACE_GRAPH_objdet_pb */              "frozen_inference_graph_objdet.pb",
+            /* FROZEN_INTERFACE_GRAPH_detseg_pb */              "frozen_inference_graph_detseg.pb",
             /* MOBILENETSSD_DEPLOY_caffemodel */                "MobileNetSSD_deploy.caffemodel",
             
             /* SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt */    "ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt",
-            /* MOBILENETSSD_DEPLOY_prototxt_txt */              "MobileNetSSD_deploy.prototxt.txt"
+            /* MOBILENETSSD_DEPLOY_prototxt_txt */              "MobileNetSSD_deploy.prototxt.txt",
+            /* MASK_RCNN_INCEPTION_V2_COCO_2018_01_28_pbtxt */  "mask_rcnn_inception_v2_coco_2018_01_28.pbtxt"//.txt"
     };
 
 
@@ -59,35 +96,7 @@ public:
     SysFiles& operator=(SysFiles const&&)           = delete;
     ~SysFiles();
 
-    static SysFiles* get_instance                   ();
-
-
-    ///> main interface
-    enum UNIT{
-        SUPRES,
-        OBJDET
-    };
-    enum SUPRES_FILE{
-        FSRCNN_x2,
-        FSRCNN_x3,
-        FSRCNN_x4,
-        FSRCNN_small_x2,
-        FSRCNN_small_x3,
-        FSRCNN_small_x4,
-    };
-    enum OBJDET_FILE{
-        /* objects classes */
-        OBJECT_DETECTION_CLASSES_COCO_txt,
-
-        /* model */
-        FROZEN_INTERFACE_GRAPH_pb,
-        MOBILENETSSD_DEPLOY_caffemodel,
-
-        /* config */
-        SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt,
-        MOBILENETSSD_DEPLOY_prototxt_txt
-    };
-
+    static SysFiles*     get_instance                   ();
 
     string               get_path_to                (const int _unit, const int _file);
 

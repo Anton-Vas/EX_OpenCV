@@ -33,6 +33,7 @@ public:
         SYS_SHREC_OK,
         SYS_HREC_OK,
         SYS_OBJDET_OK,
+        SYS_DETSEG_OK,
         SYS_FILE_FOUND,
         SYS_WIND_CLOSE,
         SYS_WIND_OPEN,
@@ -43,6 +44,7 @@ public:
         SYS_VIDEO_CAP_ERR,
         SYS_ORG_FRAME_EMPTY,
         SYS_FILE_ABSENT,
+        SYS_NET_EMPTY,
 
         MSG_ERR_END
     };
@@ -74,7 +76,8 @@ private:
             /* SYS_TRACK_OK */                      "single track         READY ",
             /* SYS_SHREC_OK */                      "shrec                READY ",
             /* SYS_HREC_OK */                       "hrec                 READY ",
-            /* SYS_objdet_OK */                     "objdet               READY ",
+            /* SYS_OBJDET_OK */                     "objdet               READY ",
+            /* SYS_DETSEG_OK */                     "detseg               READY ",
             /* SYS_FILE_FOUND */                    "file                 FOUND ",
             /* SYS_WIND_CLOSE */                    "window              CLOSED ",
             /* SYS_WIND_OPEN */                     "window              OPENED "
@@ -82,7 +85,8 @@ private:
     const array<string, MSG_ERR_END>    msg_error   = {
             /* SYS_VIDEO_CAP_ERR */                 "video port       NOT READY ",
             /* SYS_ORG_FRAME_EMPTY */               "org frame            EMPTY ",
-            /* SYS_FILE_ABSENT */                   "file             NOT FOUND "
+            /* SYS_FILE_ABSENT */                   "file             NOT FOUND ",
+            /* SYS_NET_EMPTY */                     "trained net          EMPTY "
     };
     const array<string, MSG_INFO_END>   msg_info    = {
             /* SYS_APP_SETUP */                     "~~~~~~~~~~~~~ App START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",

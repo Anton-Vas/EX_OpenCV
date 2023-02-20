@@ -45,11 +45,17 @@ public:
     bool                f_hrec_enable               = false;    ///> RUN
     bool                f_hrec_wind_close           = false;    ///> widow close
 
-        /* image classification */
+        /* object detection */
     bool                f_objdet                      = false;    ///> general
     bool                f_objdet_init                 = false;    ///> INIT
     bool                f_objdet_enable               = false;    ///> RUN
     bool                f_objdet_wind_close           = false;    ///> widow close
+
+        /* object detection & image segmentation */
+    bool                f_detseg                      = false;    ///> general
+    bool                f_detseg_init                 = false;    ///> INIT
+    bool                f_detseg_enable               = false;    ///> RUN
+    bool                f_detseg_wind_close           = false;    ///> widow close
 
 
 
@@ -127,9 +133,11 @@ public:
         /* hand recognition */
     const string        c_hrec_wind_name            = "Hand Recognition";
 
-        /* hand recognition */
-    const string        c_objdet_wind_name          = "Image Classification";
+        /* object detection */
+    const string        c_objdet_wind_name          = "Object Detection";
 
+        /* object detection & image segmentation */
+    const string        c_detseg_wind_name          = "Object Detection & Image Segmentation";
 
 
     ///> main interface

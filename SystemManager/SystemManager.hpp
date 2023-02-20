@@ -112,20 +112,45 @@ private:
     Mat                 out_hrec_frame;
 
 
-        /* (objdet) image classification */
+        /* (objdet) object detection */
     vector<string>      objdet_obj_names;
     Net                 objdet_trained_model;
     string              objdet_path_framework       = "TensorFlow";
-    const int           c_objdet_blob_scale         = 720;                              //> 224 | 300 | 720
+    const int           c_objdet_blob_scale         = 300;                              //> 224 | 300 | 720
+    const float         c_confidence_max_objdet     = 0.5;
     int                 box_x_objdet;
     int                 box_y_objdet;
     int                 box_w_objdet;
     int                 box_h_objdet;
     int                 obj_id_objdet;
-    int                 confidence_id_objdet;
+    float               confidence_id_objdet;
     Mat                 objdet_blob_frame;
     Mat                 objdet_out_model_frame;
     Mat                 out_objdet_frame;
+
+        /* object detection & image segmentation */
+    const float         c_detseg_conf_threshold     = 0.5;                              ///> Confidence threshold
+    const float         c_detseg_mask_threshold     = 0.3;                              ///> Mask threshold
+    const int           c_detseg_depth              = 5;
+    const double        c_detseg_scale_factor       = 1.0;
+    const bool          c_detseg_swapRB             = false;
+    const bool          c_detseg_crop               = false;
+    const bool          f_rand_colors               = false;                            ///> flag: randomize mask color
+    int                 detseg_num_detections;
+    int                 detseg_num_classes;
+    int                 obj_id_detseg;
+    float               confidence_id_detseg;
+    // string              detseg_path_framework       = "TensorFlow";
+    vector<Scalar>      detseg_colors;                                                  ///> Colors container
+    vector<string>      detseg_obj_names;
+    vector<string>      detseg_out_layers;
+    vector<Mat>         detseg_out_model_frames;
+    Scalar              detseg_color;
+    Net                 detseg_trained_model;
+    Mat                 detseg_blob_frame;
+    Mat                 out_detseg_frame;
+
+
 
 
     ///> debug print
@@ -150,6 +175,7 @@ public:
     void                enable_shrec                ();
     void                enable_hrec                 ();
     void                enable_objdet               ();
+    void                enable_detseg               ();
 
     void                setup_video_GUI             ();
     void                setup_supres                ();
@@ -157,6 +183,7 @@ public:
     void                setup_shrec                 ();
     void                setup_hrec                  ();
     void                setup_objdet                ();
+    void                setup_detseg                ();
 
     void                get_cmd                     (const char _cmd);
     void                clear_all_flags             ();

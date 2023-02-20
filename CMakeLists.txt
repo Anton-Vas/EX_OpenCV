@@ -36,7 +36,7 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-message("\n############################################################################################\n")
+message("\n####################################################################################\n")
 message("> BUILD INFO")
 message("-- BASIC")
 message("       ROOT:           " ${ROOT})
@@ -45,7 +45,7 @@ message("       CMAKE version:  " ${CMAKE_VERSION})
 message("-- OpenCV")
 message("       OPENCV version: " ${OpenCV_VERSION})
 message("       OPENCV include: " ${OpenCV_INCLUDE_DIRS})
-message("\n############################################################################################\n")
+message("\n####################################################################################\n")
 
 
 

@@ -26,20 +26,17 @@ SysFiles* SysFiles::get_instance                (){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 string  SysFiles::get_path_to                   (const int _unit, const int _file){
-    // if(_file.find("FSRCNN")){
-    // 	file = ("SystemDependencies/" + _file + ".pb");
-    // }
-    // return absolute(file);
 
+    file.clear();
     switch(_unit){
     case SUPRES:
         file = ("SystemDependencies/" + file_supres[_file]);
         debug->print_debug(debug->DONE, debug->SYS_FILE_FOUND, file_supres[_file]);
         break;
 
-    case OBJDET:
-        file = ("SystemDependencies/" + file_objdet[_file]);
-        debug->print_debug(debug->DONE, debug->SYS_FILE_FOUND, file_objdet[_file]);
+    case DETECT:
+        file = ("SystemDependencies/" + file_detect[_file]);
+        debug->print_debug(debug->DONE, debug->SYS_FILE_FOUND, file_detect[_file]);
         break;
 
     default:

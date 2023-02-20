@@ -1,21 +1,21 @@
 # Exercise OpenCV with MediaPipe
 
-## Purpose
+# Purpose
 
-## Usage
+# Usage
 
-## General code overview
+# General code overview
 
-## Source materials
+# Source materials
 - [x] __Super resolution (supres)__
 
     __Task__: _to enhance frame resolution_
 
     __Source__:
     
-    - (code + theory)     https://learnopencv.com/super-resolution-in-opencv/
+    - code/theory__| https://learnopencv.com/super-resolution-in-opencv/
                     
-    - (.pb)               https://github.com/Saafke/FSRCNN_Tensorflow
+    - protobuf_____| https://github.com/Saafke/FSRCNN_Tensorflow
     
     __Example__:
     
@@ -27,7 +27,7 @@
     
     __Source__:
     
-    - (code + theory)     https://learnopencv.com/object-tracking-using-opencv-cpp-python/
+    - code/theory__| https://learnopencv.com/object-tracking-using-opencv-cpp-python/
     
     __Example__:
     
@@ -43,11 +43,11 @@
     
     __Source__:
     
-    - (code + theory)     https://opencvproject.wordpress.com/projects-files/detection-shape/
+    - code/theory__| https://opencvproject.wordpress.com/projects-files/detection-shape/
     
-    - (code + theory)     https://github.com/bsdnoobz/opencv-code/blob/master/shape-detect.cpp
+    - code/theory__| https://github.com/bsdnoobz/opencv-code/blob/master/shape-detect.cpp
     
-    - (contour detection) https://learnopencv.com/contour-detection-using-opencv-python-c/#Drawing-Contours-using-CHAIN_APPROX_SIMPLE
+    - contour det-n_| https://learnopencv.com/contour-detection-using-opencv-python-c/#Drawing-Contours-using-CHAIN_APPROX_SIMPLE
 
 - [ ] __Hand recognition (hrec)__
 
@@ -55,7 +55,7 @@
     
     __Source__:
     
-    - (code + theory)     https://github.com/ahmetyaylalioglu/Estimation-of-the-number-of-real-time-hand-fingers-with-image-processing/blob/master/ElAlgilaV2.cpp
+    - code/theory__| https://github.com/ahmetyaylalioglu/Estimation-of-the-number-of-real-time-hand-fingers-with-image-processing/blob/master/ElAlgilaV2.cpp
     
 - [X] __Object detection (objdet)__
 
@@ -63,8 +63,16 @@
 
     __Source__:
 
-    - (code + theory)     https://learnopencv.com/deep-learning-with-opencvs-dnn-module-a-definitive-guide/#guide-to-image-classification
+    - code/theory__| https://learnopencv.com/deep-learning-with-opencvs-dnn-module-a-definitive-guide/#guide-to-image-classification
 
-    - (code + theory)     https://learnopencv.com/deep-learning-with-opencvs-dnn-module-a-definitive-guide/
+    - code/theory__| https://learnopencv.com/deep-learning-with-opencvs-dnn-module-a-definitive-guide/
 
-    - (code)              https://github.com/ChiekoN/OpenCV_SSD_MobileNet
+    - code_________| https://github.com/ChiekoN/OpenCV_SSD_MobileNet
+
+- [X] __Object Detection and Instance Segmentation using Mask RCNN  (detseg)__
+
+    __Task__: _to detect as many objects as possible with image segmentation_
+
+    __Source__:
+
+    - code/theory__| https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c/

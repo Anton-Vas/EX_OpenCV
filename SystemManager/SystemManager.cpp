@@ -148,6 +148,18 @@ void SystemManager::enable_video_GUI            (){
         sys_param->f_objdet_wind_close = false;
     }
 
+    if (sys_param->f_detseg)        {//> detseg
+    
+        enable_detseg();
+
+        gui->show_video_FPS(out_detseg_frame, fps);
+        imshow( gui->c_detseg_wind_name, out_detseg_frame);
+    }
+    else if (sys_param->f_detseg_wind_close){
+        destroy_window(gui->c_detseg_wind_name);
+        sys_param->f_detseg_wind_close = false;
+    }
+
     //> original
     gui->show_video_FPS(org_frame, fps);
     imshow( gui->c_org_wind_name, org_frame);
@@ -354,21 +366,21 @@ void SystemManager::enable_objdet               (){
         objdet_trained_model.setInput( objdet_blob_frame);
         
         //> forward pass through the model to carry out the detection
-        objdet_out_model_frame = objdet_trained_model.forward();
+        objdet_out_model_frame = objdet_trained_model.forward("detection_out");
 
         Mat detectionMat(
             objdet_out_model_frame.size[2],
-            objdet_out_model_frame.size[3],
+            objdet_out_model_frame.size[3], // 3
             CV_32F,
             objdet_out_model_frame.ptr<float>()
         );
 
         for (int i = 0; i < detectionMat.rows; i++){
-            obj_id_objdet         = detectionMat.at<float>(i, 1);
             confidence_id_objdet  = detectionMat.at<float>(i, 2);
   
             //> Check if the detection is of good quality
-            if (confidence_id_objdet > 0.4){
+            if (confidence_id_objdet > c_confidence_max_objdet){
+                obj_id_objdet = detectionMat.at<float>(i, 1);
                 box_x_objdet = static_cast<int>(detectionMat.at<float>(i, 3) * out_objdet_frame.cols);
                 box_y_objdet = static_cast<int>(detectionMat.at<float>(i, 4) * out_objdet_frame.rows);
                 box_w_objdet = static_cast<int>(detectionMat.at<float>(i, 5) * out_objdet_frame.cols - box_x_objdet);
@@ -384,11 +396,11 @@ void SystemManager::enable_objdet               (){
                         box_y_objdet + box_h_objdet
                     ),
                     gui->c_clr_GREEN,
-                    2
+                    4
                 );
                 putText(
                     out_objdet_frame,
-                    objdet_obj_names[obj_id_objdet-1] + ": " + to_string(confidence_id_objdet),
+                    objdet_obj_names[obj_id_objdet] + ": " + to_string(confidence_id_objdet),
                     Point(
                         box_x_objdet,
                         box_y_objdet - 5
@@ -396,18 +408,150 @@ void SystemManager::enable_objdet               (){
                     gui->c_font,
                     0.5,
                     gui->c_clr_GREEN,
-                    1
+                    2
                 );
             }
             else{
-                gui->show_video_ERROR_msg(out_objdet_frame, "NO OBJDET");
+                // gui->show_video_ERROR_msg(out_objdet_frame, "NO OBJDET");
             }
         }
     }
 
 }
 
+void SystemManager::enable_detseg               (){
+    //> init
+    if (sys_param->f_detseg_init){
+        setup_detseg();
+    }
 
+    //> run
+    if (sys_param->f_detseg_enable){
+        
+        org_frame.copyTo(out_detseg_frame);
+
+        //> make blob
+        blobFromImage(
+            out_detseg_frame,
+            detseg_blob_frame,
+            c_detseg_scale_factor,
+            Size(
+                out_detseg_frame.cols,
+                out_detseg_frame.rows
+            ),
+            Scalar(),
+            c_detseg_swapRB,
+            c_detseg_crop,
+            c_detseg_depth
+        );
+
+        //> feed the net
+        detseg_trained_model.setInput(detseg_blob_frame);
+
+        //> get data from the net
+        detseg_trained_model.forward(detseg_out_model_frames, detseg_out_layers);
+
+        //> postprocess
+        /*  Output size of masks is NxCxHxW where:
+        *   N - number of detected boxes
+        *   C - number of classes (excluding background)
+        *   HxW - segmentation shape
+        */
+        Mat out_detect_frame    = detseg_out_model_frames.at(0);
+        Mat out_masks_frame     = detseg_out_model_frames.at(1);
+        detseg_num_detections   = out_detect_frame.size[2];
+        detseg_num_classes      = out_masks_frame.size[1];
+        out_detect_frame        = out_detect_frame.reshape(1, out_detect_frame.total() / 7);
+
+        for(int i = 0; i < detseg_num_detections; i++){
+            confidence_id_detseg = out_detect_frame.at<float>(i, 2);
+            
+            if(confidence_id_detseg > c_detseg_conf_threshold){
+
+                //> extract the bounding box
+                obj_id_detseg = static_cast<int>(out_detseg_frame.at<float>(i, 1));
+                int left      = static_cast<int>(out_detseg_frame.cols * out_detect_frame.at<float>(i, 3));
+                int top       = static_cast<int>(out_detseg_frame.rows * out_detect_frame.at<float>(i, 4));
+                int right     = static_cast<int>(out_detseg_frame.cols * out_detect_frame.at<float>(i, 5));
+                int bottom    = static_cast<int>(out_detseg_frame.rows * out_detect_frame.at<float>(i, 6));
+    
+                left     = max(0, min(left, out_detseg_frame.cols - 1));
+                top      = max(0, min(top, out_detseg_frame.rows - 1));
+                right    = max(0, min(right, out_detseg_frame.cols - 1));
+                bottom   = max(0, min(bottom, out_detseg_frame.rows - 1));
+                Rect box = Rect(left, top, right - left + 1, bottom - top + 1);
+    
+                // extract the mask for the object
+                Mat objectMask(
+                    out_masks_frame.size[2],
+                    out_masks_frame.size[3],
+                    CV_32F,
+                    out_masks_frame.ptr<float>(
+                        i,
+                        obj_id_detseg
+                    )
+                );
+    
+                //> draw a rectangle displaying the bounding box
+                rectangle(
+                    out_detseg_frame,
+                    Point(box.x, box.y),
+                    Point(box.x + box.width, box.y + box.height),
+                    Scalar(255, 178, 50),
+                    3
+                );
+        // cout<<"bound box"<<endl;
+            
+                //Get the label for the class name and its confidence
+                string label = format("%.2f", confidence_id_detseg);
+                if (!detseg_obj_names.empty()){
+                    CV_Assert(obj_id_detseg < (int)detseg_obj_names.size());
+                    label = detseg_obj_names[obj_id_detseg] + ":" + label;
+                }
+        // cout<<"get label"<<endl;
+            
+                //Display the label at the top of the bounding box
+                int baseLine;
+                Size labelSize = getTextSize(label, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
+                box.y = max(box.y, labelSize.height);
+                rectangle(out_detseg_frame, Point(box.x, box.y - round(1.5 * labelSize.height)), Point(box.x + round(1.5 * labelSize.width), box.y + baseLine), Scalar(255, 255, 255), FILLED);
+                putText(out_detseg_frame, label, Point(box.x, box.y), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0,0,0),1);
+
+        // cout<<"display label"<<endl;
+
+                //> apply colors to mask
+                if (f_rand_colors){
+                    int colorInd = rand() % detseg_colors.size();
+                    detseg_color = detseg_colors[colorInd];
+                }
+                else{
+                    detseg_color = detseg_colors[obj_id_detseg % detseg_colors.size()];
+                }
+        // cout<<"apply mask color"<<endl;
+                
+            
+                // Resize the mask, threshold, color and apply it on the image
+                resize(objectMask, objectMask, Size(box.width, box.height));
+                Mat mask = (objectMask > c_detseg_mask_threshold);
+                Mat coloredRoi = (0.3 * detseg_color + 0.7 * out_detseg_frame(box));
+                coloredRoi.convertTo(coloredRoi, CV_8UC3);
+            
+        // cout<<"on image"<<endl;
+                // Draw the contours on the image
+                vector<Mat> contours;
+                Mat hierarchy;
+                mask.convertTo(mask, CV_8U);
+                findContours(mask, contours, hierarchy, RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+                drawContours(coloredRoi, contours, -1, detseg_color, 5, LINE_8, hierarchy, 100);
+                coloredRoi.copyTo(out_detseg_frame(box), mask);
+
+        // cout<<"draw contours"<<endl;
+        // cout<<"~~~~~~~~~~~~~~~~~~"<<endl;
+            }
+        }
+    }
+
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -486,8 +630,8 @@ void SystemManager::setup_objdet                (){
     
     ifstream ifs((
         files->get_path_to(
-            files->OBJDET,
-            files->OBJDET_FILE::OBJECT_DETECTION_CLASSES_COCO_txt
+            files->DETECT,
+            files->DETECT_FILE::OBJECT_DETECTION_CLASSES_COCO_txt
         )).c_str()
     );
 
@@ -500,12 +644,12 @@ void SystemManager::setup_objdet                (){
    //> V1
     objdet_trained_model = readNet(
         files->get_path_to(
-            files->UNIT::OBJDET,
-            files->OBJDET_FILE::FROZEN_INTERFACE_GRAPH_pb
+            files->UNIT::DETECT,
+            files->DETECT_FILE::FROZEN_INTERFACE_GRAPH_objdet_pb
         ),
         files->get_path_to(
-            files->UNIT::OBJDET,
-            files->OBJDET_FILE::SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt
+            files->UNIT::DETECT,
+            files->DETECT_FILE::SSD_MOBILENET_V2_COCO_2018_03_29_pbtxt_txt
         ),
         objdet_path_framework
     );
@@ -521,6 +665,11 @@ void SystemManager::setup_objdet                (){
     //     )
     // );
 
+    if(objdet_trained_model.empty()){
+        debug->print_debug(debug->ERROR, debug->SYS_NET_EMPTY);
+    }
+
+    //> aim to CPU
     objdet_trained_model.setPreferableBackend(DNN_BACKEND_OPENCV);
     objdet_trained_model.setPreferableTarget(DNN_TARGET_CPU);
 
@@ -531,6 +680,69 @@ void SystemManager::setup_objdet                (){
     debug->print_debug(debug->DONE, debug->SYS_OBJDET_OK);
 }
 
+void SystemManager::setup_detseg                (){
+    create_window(gui->c_detseg_wind_name, gui->c_vid_wind_flag);
+    
+    //> parse objects
+    ifstream ifs_objects((
+        files->get_path_to(
+            files->DETECT,
+            files->DETECT_FILE::OBJECT_DETECTION_CLASSES_COCO_txt
+        )).c_str()
+    );
+    string line_o;
+    while (getline(ifs_objects, line_o)){
+        detseg_obj_names.push_back(line_o);
+    }
+    ifs_objects.close();
+    detseg_obj_names.erase(detseg_obj_names.begin(), detseg_obj_names.begin() + 1); // The given onj list is suits for objdet part. For detseg the list must be cleared out of 'unlabeled'
+
+    //> parse colors
+    ifstream ifs_colors((
+        files->get_path_to(
+            files->DETECT,
+            files->DETECT_FILE::COLORS_txt
+        )).c_str()
+    );
+    string line_c;
+    while(getline(ifs_colors, line_c)){
+        char* pEnd;
+        double r, g, b;
+        r = strtod (line_c.c_str(), &pEnd);
+        g = strtod (pEnd, NULL);
+        b = strtod (pEnd, NULL);
+        detseg_colors.push_back(Scalar(r, g, b, 255.0));
+    }
+    ifs_colors.close();
+
+    //> load th eneural network model
+    detseg_trained_model = readNet(
+        files->get_path_to(
+            files->UNIT::DETECT,
+            files->DETECT_FILE::FROZEN_INTERFACE_GRAPH_detseg_pb
+        ),
+        files->get_path_to(
+            files->UNIT::DETECT,
+            files->DETECT_FILE::MASK_RCNN_INCEPTION_V2_COCO_2018_01_28_pbtxt
+        )
+    );
+
+    //> aim to CPU
+    detseg_trained_model.setPreferableBackend(DNN_BACKEND_OPENCV);
+    detseg_trained_model.setPreferableTarget(DNN_TARGET_CPU);
+
+    //> set output layers
+    detseg_out_layers.push_back("detection_out_final");
+    detseg_out_layers.push_back("detection_masks");
+
+    //> sys dependencies
+    sys_param->f_detseg_init          = false;
+    sys_param->f_detseg_enable        = true;
+    sys_param->f_detseg_wind_close    = true;
+
+    debug->print_debug(debug->DONE, debug->SYS_DETSEG_OK);
+}
+
 
 
 void SystemManager::get_cmd                     (const char _cmd){
@@ -539,7 +751,7 @@ void SystemManager::get_cmd                     (const char _cmd){
             clear_all_flags();
             debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "close all except original video stream");
         }
-        else if (_cmd == 'd'){//> debug
+        else if (_cmd == 'p'){//> debug
             debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "output all control options");
             debug->print_debug_cmd_options();
         }
@@ -569,9 +781,15 @@ void SystemManager::get_cmd                     (const char _cmd){
         }
         else if (_cmd == 'i'){//> objdet
             clear_all_flags();
-            sys_param->f_objdet          = !sys_param->f_objdet;
-            sys_param->f_objdet_init     = !sys_param->f_objdet_init;
+            sys_param->f_objdet        = !sys_param->f_objdet;
+            sys_param->f_objdet_init   = !sys_param->f_objdet_init;
             debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "object detection running ...");
+        }
+        else if (_cmd == 'd'){//> detseg
+            clear_all_flags();
+            sys_param->f_detseg        = !sys_param->f_detseg;
+            sys_param->f_detseg_init   = !sys_param->f_detseg_init;
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "object det-n & image seg-n running ...");
         }
         //> IN PROGRESS
         // else if (_cmd == '1'){//> START
@@ -598,9 +816,12 @@ void SystemManager::clear_all_flags             (){
      sys_param->f_hrec             = false;
      sys_param->f_hrec_init        = false;
      sys_param->f_hrec_enable      = false;
-    sys_param->f_objdet              = false;
-    sys_param->f_objdet_init         = false;
-    sys_param->f_objdet_enable       = false;
+    sys_param->f_objdet            = false;
+    sys_param->f_objdet_init       = false;
+    sys_param->f_objdet_enable     = false;
+     sys_param->f_detseg           = false;
+     sys_param->f_detseg_init      = false;
+     sys_param->f_detseg_enable    = false;
 }
 
 
