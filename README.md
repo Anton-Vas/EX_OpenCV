@@ -76,3 +76,9 @@
     __Source__:
 
     - code/theory__| https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c/
+
+__Additional info:__
+
+    Different Python examples with interesting realizations:
+
+    https://github.com/methylDragon/opencv-python-reference
