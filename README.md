@@ -9,7 +9,7 @@
 # Source materials
 - [x] __Super resolution (supres)__
 
-    __Task__: _to enhance frame resolution_
+    __Task__: _to enhance frames resolution_
 
     __Source__:
     
@@ -49,9 +49,9 @@
     
     - contour det-n_| https://learnopencv.com/contour-detection-using-opencv-python-c/#Drawing-Contours-using-CHAIN_APPROX_SIMPLE
 
-- [ ] __Hand recognition (hrec)__
+- [ ] __Hand recognition (hrec) [DEAD]__
 
-    __Task__: _to recognise hands numeric gestures with OpenCV_
+    __Task__: _to recognise hands numeric gestures with OpenCV internal capabilities_
     
     __Source__:
     
@@ -59,7 +59,7 @@
     
 - [X] __Object detection (objdet)__
 
-    __Task__: _to detect as many objects as possible_
+    __Task__: _to detect and outline the region with observable objects (listed in 'object_detection_classes_coco.txt' list)_
 
     __Source__:
 
@@ -71,14 +71,15 @@
 
 - [X] __Object Detection and Instance Segmentation using Mask RCNN  (detseg)__
 
-    __Task__: _to detect as many objects as possible with image segmentation_
+    __Task__: _to detect objects as in 'objdet' but use Mask RCNN to outline specific objects region_
 
     __Source__:
 
     - code/theory__| https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c/
 
+
 __Additional info:__
 
-    Different Python examples with interesting realizations:
+- Different Python examples with interesting implementation was taken as smaples.
 
-    https://github.com/methylDragon/opencv-python-reference
+    - code/theory__| https://github.com/methylDragon/opencv-python-reference
