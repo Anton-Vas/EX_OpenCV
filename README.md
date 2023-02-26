@@ -1,12 +1,112 @@
-# Exercise OpenCV
+# Exercise in OpenCV
 
-# Purpose
+## Purpose
 
-# Usage
+The core idea of this little repo is to practice the OpenCV fundamentals. 
+This repo IS NOT SUITABLE FOR PRODUCTION purposes but rather for general use cases overview. 
+With this in mind, the presented code below is easy to edit and even easier to understand.
 
-# General code overview
+## Code & File tree
 
-# Source materials
+The repo was written in/with:
+- VS Code (latest version)
+- OpenCV 4.5.5 with appropriate Contrib repo-s.
+
+The base contains a few shell scripts for building / configuring / running cases. All of them are presented for simplification of interaction, although the initial methods were VS Code built-in commands.
+
+Other files are system necessities so it`s not worth the time to overview.
+```
+EX_OPENCV
+│   .gitignore
+│   CMakeLists.txt
+│   build.sh
+│   config.sh
+│   run.sh
+│   main.cpp
+│   main.hpp
+│   README.md
+│   FIXME.md
+│
+```
+DebugPrint contains a special class for notification via the terminal. 
+```
+│
+├───DebugPrint
+│       CMakeLists.txt
+│       DebugPrint.cpp
+│       DebugPrint.hpp
+│
+```
+SystemDependencies contains resources on which every module relies.
+
+- SysFiles (hpp/cpp) - class for files managemants.
+```
+│
+├───SystemDependencies
+│       CMakeLists.txt
+│       colors.txt
+│       frozen_inference_graph_detseg.pb
+│       frozen_inference_graph_objdet.pb
+│       FSRCNN-small_x2.pb
+│       FSRCNN-small_x3.pb
+│       FSRCNN-small_x4.pb
+│       FSRCNN_x2.pb
+│       FSRCNN_x3.pb
+│       FSRCNN_x4.pb
+│       mask_rcnn_inception_v2_coco_2018_01_28.pbtxt
+│       mask_rcnn_inception_v2_coco_2018_01_28.pbtxt.txt
+│       MobileNetSSD_deploy.caffemodel
+│       MobileNetSSD_deploy.prototxt.txt
+│       object_detection_classes_coco.txt
+│       ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt
+│       SysFiles.cpp
+│       SysFiles.hpp
+│
+```
+SystemManager has all system classes, such as:
+
+- SystemManager (hpp/cpp) - the core. Define systems API.
+
+- SysHelper (cpp) - non-standard functions.
+
+- SysWindows (cpp)- basic OpenCV operations on a window.
+
+- SysParams (hpp/cpp) - system connector for future updates (the container for system flags) and system GUI parameters (windows names, colours, fonts ...).
+```
+│
+└───SystemManager
+        CMakeLists.txt
+        SysHelper.cpp
+        SysParams.cpp
+        SysParams.hpp
+        SystemManager.cpp
+        SystemManager.hpp
+        SysWindow.cpp
+```
+
+## Usage
+
+Upon starting, the original video stream begins to display. This original, unenhanced video will always be visible in its own window so a user may use an internal interface.
+
+The internal interface allows the activation of units by choosing the original videos window and pressing specific key.
+
+The list of commands:
+
+ SYSTEM:
+- [x] c  : CLOSE all modifications except the original video 
+- [x] p  : DEBUG print control options
+  
+UNIT:
+- [x] s  : super-resolution 
+- [x] i  : object detection
+- [x] t  : single object track
+- [x] d  : object detection & img segmentation
+- [x] o  : shape recognition 
+- [ ] h  : hand recognition   [DEAD]
+
+
+
+## Source materials
 - [x] __Super resolution (supres)__
 
     __Task__: _to enhance frames resolution_
