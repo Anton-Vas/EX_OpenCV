@@ -500,7 +500,7 @@ void SystemManager::enable_detseg               (){
                     Scalar(255, 178, 50),
                     3
                 );
-        // cout<<"bound box"<<endl;
+        cout<<"bound box"<<endl;
             
                 //Get the label for the class name and its confidence
                 string label = format("%.2f", confidence_id_detseg);
@@ -508,7 +508,7 @@ void SystemManager::enable_detseg               (){
                     CV_Assert(obj_id_detseg < (int)detseg_obj_names.size());
                     label = detseg_obj_names[obj_id_detseg] + ":" + label;
                 }
-        // cout<<"get label"<<endl;
+        cout<<"get label"<<endl;
             
                 //Display the label at the top of the bounding box
                 int baseLine;
@@ -517,7 +517,7 @@ void SystemManager::enable_detseg               (){
                 rectangle(out_detseg_frame, Point(box.x, box.y - round(1.5 * labelSize.height)), Point(box.x + round(1.5 * labelSize.width), box.y + baseLine), Scalar(255, 255, 255), FILLED);
                 putText(out_detseg_frame, label, Point(box.x, box.y), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0,0,0),1);
 
-        // cout<<"display label"<<endl;
+        cout<<"display label"<<endl;
 
                 //> apply colors to mask
                 if (f_rand_colors){
@@ -527,7 +527,7 @@ void SystemManager::enable_detseg               (){
                 else{
                     detseg_color = detseg_colors[obj_id_detseg % detseg_colors.size()];
                 }
-        // cout<<"apply mask color"<<endl;
+        cout<<"apply mask color"<<endl;
                 
             
                 // Resize the mask, threshold, color and apply it on the image
@@ -536,7 +536,7 @@ void SystemManager::enable_detseg               (){
                 Mat coloredRoi = (0.3 * detseg_color + 0.7 * out_detseg_frame(box));
                 coloredRoi.convertTo(coloredRoi, CV_8UC3);
             
-        // cout<<"on image"<<endl;
+        cout<<"on image"<<endl;
                 // Draw the contours on the image
                 vector<Mat> contours;
                 Mat hierarchy;
@@ -545,8 +545,8 @@ void SystemManager::enable_detseg               (){
                 drawContours(coloredRoi, contours, -1, detseg_color, 5, LINE_8, hierarchy, 100);
                 coloredRoi.copyTo(out_detseg_frame(box), mask);
 
-        // cout<<"draw contours"<<endl;
-        // cout<<"~~~~~~~~~~~~~~~~~~"<<endl;
+        cout<<"draw contours"<<endl;
+        cout<<"~~~~~~~~~~~~~~~~~~"<<endl;
             }
         }
     }
@@ -759,37 +759,37 @@ void SystemManager::get_cmd                     (const char _cmd){
             clear_all_flags();
             sys_param->f_supres = !sys_param->f_supres;
             sys_param->f_supres_init   = !sys_param->f_supres_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "super resolution running ...");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "super resolution");
         }
         else if (_cmd == 't'){//> track
             clear_all_flags();
             sys_param->f_track         = !sys_param->f_track;
             sys_param->f_track_init    = !sys_param->f_track_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "single object tracking running ...");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "single object tracking");
         }
         else if (_cmd == 'o'){//> shrec
             clear_all_flags();
             sys_param->f_shrec         = !sys_param->f_shrec;
             sys_param->f_shrec_init    = !sys_param->f_shrec_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "shape recognition running ...");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "shape recognition");
         }
         else if (_cmd == 'h'){//> hrec
             clear_all_flags();
             sys_param->f_hrec          = !sys_param->f_hrec;
             sys_param->f_hrec_init     = !sys_param->f_hrec_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "hand recognition running ...");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "hand recognition");
         }
         else if (_cmd == 'i'){//> objdet
             clear_all_flags();
             sys_param->f_objdet        = !sys_param->f_objdet;
             sys_param->f_objdet_init   = !sys_param->f_objdet_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "object detection running ...");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "object detection");
         }
         else if (_cmd == 'd'){//> detseg
             clear_all_flags();
             sys_param->f_detseg        = !sys_param->f_detseg;
             sys_param->f_detseg_init   = !sys_param->f_detseg_init;
-            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "object det-n & image seg-n running ...");
+            debug->print_debug(debug->INFO, debug->SYS_NEW_CMD, "object det-n & image seg-n");
         }
         //> IN PROGRESS
         // else if (_cmd == '1'){//> START

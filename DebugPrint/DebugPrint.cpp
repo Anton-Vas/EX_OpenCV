@@ -120,7 +120,7 @@ void DebugPrint::print_debug_cmd_options        (){
     cout << "      |   c  : CLOSE all modifications except the original video          |" << c_new_line;
     cout << "      |   p  : DEBUG print control options                                |" << c_new_line;
     cout << "      |                                                                   |" << c_new_line;
-    cout << "      | MODIFICATIONS:                                                    |" << c_new_line;
+    cout << "      | UNIT:                                                             |" << c_new_line;
     cout << "      |   s  : super res-n               | i  : object det-n              |" << c_new_line;
     cout << "      |   t  : single object track       | d  : object det-n & img seg-n  |" << c_new_line;
     cout << "      |   o  : shape rec-n               |                                |" << c_new_line;

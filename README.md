@@ -1,4 +1,4 @@
-# Exercise OpenCV with MediaPipe
+# Exercise OpenCV
 
 # Purpose
 
