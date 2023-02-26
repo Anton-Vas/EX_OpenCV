@@ -149,7 +149,7 @@ UNIT:
     
     - contour det-n_| https://learnopencv.com/contour-detection-using-opencv-python-c/#Drawing-Contours-using-CHAIN_APPROX_SIMPLE
 
-- [ ] __Hand recognition (hrec) [DEAD]__
+- [ ] __Hand recognition (hrec)__
 
     __Task__: _to recognise hands numeric gestures with OpenCV internal capabilities_
     
