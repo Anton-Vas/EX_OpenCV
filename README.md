@@ -102,7 +102,7 @@ UNIT:
 - [x] t  : single object track
 - [x] d  : object detection & img segmentation
 - [x] o  : shape recognition 
-- [ ] h  : hand recognition   [DEAD]
+- [ ] h  : hand recognition   [IN PROGRESS]
 
 
 
@@ -121,7 +121,7 @@ UNIT:
     
     - FSRCNN (as one of the fastest algorithms)
 
-- [x] __Single region tracking (track)__ 
+- [x] __Single object tracking (track)__ 
 
     __Task__: _to track specific region (pre-aimed to the screens center)_
     
