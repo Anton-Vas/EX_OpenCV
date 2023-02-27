@@ -121,7 +121,7 @@ UNIT:
     
     - FSRCNN (as one of the fastest algorithms)
 
-- [x] __Region tracking (track)__ 
+- [x] __Single region tracking (track)__ 
 
     __Task__: _to track specific region (pre-aimed to the screens center)_
     
